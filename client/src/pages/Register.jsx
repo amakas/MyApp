@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function Home(){
-
+function Register(){
+    console.log("Chat rendered");
     const [data, setData] = useState(null);
     useEffect(() => {
         
@@ -13,9 +13,10 @@ function Home(){
     }, []);
     return(
         <div>
-            <h1>Home Page</h1>
-            <p>Welcome to the home page!</p>s
+            <h1>Registration</h1>
+            <p>Welcome to the registration page!</p>
         </div>
     )
+    
 }
-export default Home;
+export default Register;
