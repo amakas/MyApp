@@ -6,24 +6,26 @@ li{
 
 .navbar{
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    
+    flex-direction: row;
+    flex-wrap: nowrap;
+    
     position:fixed;
     top: 0;
     justify-content: space-between;
     width: 100%;
-    background-color: rgb(6, 6, 114);
+    background-color: #304C89;
     font-size:24px;
     padding: 10px 20px;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-ol{
+.pages-list{
     display: flex;
     flex-direction: row;
     
-    margin: 0 auto;
+    margin-left: 150px;
     padding: 0;
     list-style: none;
     
@@ -31,7 +33,7 @@ ol{
         margin: 0 40px;
         padding: 2px 10px;
         a{
-            color:white;
+            color:#FE5F55;
             font-weight: 600;
             
             text-decoration: none;
@@ -44,3 +46,58 @@ ol{
             text-decoration: underline;
             }
         }}
+
+.buttons-list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 0px;
+    padding: 0;
+    list-style: none;
+    button{
+        background-color: rgb(34, 20, 117);
+        border: 1px solid white;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-left: 20px;
+        padding: 5px 10px;
+        &:hover{
+            
+            background-color: rgb(50, 30, 150);
+        }
+    }
+
+    li{
+        margin: 0 0;
+        padding: 2px 2px;
+        padding-bottom:4px;
+        a{
+            color:rgb(255, 255, 255);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 18px;
+           
+        }
+        &.active a{
+            font-weight: bold;
+            
+        }
+    }
+}
+
+.logo-image{
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    
+    img{
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+}

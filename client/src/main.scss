@@ -7,12 +7,19 @@
 body{
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #ebc3c3;
+    background-color: #B9E3C6;
     color: #333;
     text-align: center;
     display:flex;
     flex-direction: column;
-    padding-top:60px;
-    padding-bottom: 70px;
+    padding-top:70px;
+    height: 100vh;
+    
 }
 
+#root{
+    
+    height: 100vh;
+    flex:1 1 auto;
+    
+}

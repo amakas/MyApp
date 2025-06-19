@@ -1,13 +1,17 @@
 footer{
-    background-color: #f8ffc7;
-    padding: 10px;
+    background-color: #f2e797;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Arial, sans-serif;
     text-align: center;
     font-size: 18px;
     color: #6c757d;
     border-top: 1px solid #000000;
-    position: fixed;
+    position: relative;
+    height:60px;
     bottom: 0;
     width: 100%;
+    margin-top:10px
 }
 
 div .container {
@@ -17,4 +21,6 @@ div .container {
 
 .text {
     font-size: 0.9rem;
+    color: #6c757d;
+   margin-top: 2px;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import './Login.scss'; // Assuming you have a CSS file for styling
 
 function Login(){
     console.log("Chat rendered");
@@ -12,7 +13,7 @@ function Login(){
         }, 1000);
     }, []);
     return(
-        <div>
+        <div className="login-page">
             <h1>Login</h1>
             <p>Please login</p>
             <form onSubmit={(e) => {

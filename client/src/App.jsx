@@ -10,9 +10,12 @@ import Profile from "./pages/Profile";
 import Footer from "./components/footer";
 import "./main.scss"; // Import your main styles
 import EditProfile from "./components/Profile/EditProfile"; // Import EditProfile page if needed
+import Terms from "./pages/Terms"; 
+import PrivacyPolicy from "./pages/Privacy"; 
 function App() {
   return (
-    <BrowserRouter>
+    <React.StrictMode>
+      <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,10 +25,16 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         {/* Add more routes as needed */}
       </Routes>
       <Footer />
     </BrowserRouter>
+    
+    </React.StrictMode>
+    
+    
   );
 }
 

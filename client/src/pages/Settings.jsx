@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import HomeButton from "../components/button";
+import HomeButton from "../components/buttons/homeButton";
+import "./Settings.scss"; // Assuming you have a CSS file for styling
 
 function Settings(){
     console.log("Home rendered");
@@ -13,7 +14,7 @@ function Settings(){
         }, 1000);
     }, []);
     return(
-        <div>
+        <div className="settings-page">
             <h1>Settings</h1>
             <HomeButton />
             

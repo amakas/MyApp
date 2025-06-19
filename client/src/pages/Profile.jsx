@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import User from "../components/Profile/User";
 import PostForm from "../components/Profile/PostForm";
 import PostList from "../components/Profile/PostList";
+import "./Profile.scss"; // Assuming you have a CSS file for styling
 
 function Profile(){
     console.log("Home rendered");

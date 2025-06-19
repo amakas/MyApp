@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import HomeButton from "../components/button";
+import HomeButton from "../components/buttons/homeButton";
+import "./chat.scss"; // Assuming you have a CSS file for styling
 function Chat(){
     console.log("Chat rendered");
     const [data, setData] = useState(null);
@@ -12,7 +13,7 @@ function Chat(){
         }, 1000);
     }, []);
     return(
-        <div>
+        <div className="chat-page">
             <h1>Chat</h1>
             <p>Welcome to the chat</p>
             <HomeButton />
