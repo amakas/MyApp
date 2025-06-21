@@ -1,7 +1,7 @@
+@use  '../styles/mixins';
+
 .login-page{
-  
-  height: calc(100% - 60px); /* Adjust for footer height */
- 
-  width: 100%;
- 
+  @include mixins.page;
+  @include mixins.flex-center;
+  @include mixins.centerOfscreen;
 }

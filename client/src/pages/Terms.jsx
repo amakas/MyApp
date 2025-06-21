@@ -1,6 +1,8 @@
+import "./Term.scss"; 
+
 export default function Terms(){
     return (
-        <div className="terms-container">
+        <div className="terms-page">
             <h1>Terms of Service</h1>
             <p>Welcome to our website! By using our services, you agree to the following terms:</p>
             <h2>1. Acceptance of Terms</h2>

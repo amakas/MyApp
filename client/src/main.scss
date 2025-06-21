@@ -12,14 +12,28 @@ body{
     text-align: center;
     display:flex;
     flex-direction: column;
-    padding-top:70px;
-    height: 100vh;
     
 }
 
-#root{
-    
-    height: 100vh;
-    flex:1 1 auto;
-    
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 70px; 
+  padding-bottom: 60px; 
+}
+
+footer {
+  height: 60px; 
+  background: #333;
+  color: white;
 }

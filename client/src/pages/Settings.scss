@@ -1,5 +1,6 @@
-.settings-page {
-  height: calc(100% - 60px); /* Adjust for footer height */
- 
+@use  '../styles/mixins';
+
+.settings-page{
+  @include mixins.page;
   width: 100%;
 }

@@ -1,7 +1,7 @@
-.register-page{
-  
-  height: calc(100% - 60px); /* Adjust for footer height */
- 
-  width: 100%;
- 
+@use  '../styles/mixins';
+
+.register-page {
+  @include mixins.page;
+  @include mixins.flex-center;
+  @include mixins.centerOfscreen
 }

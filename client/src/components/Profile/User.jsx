@@ -2,11 +2,14 @@ import {useState} from 'react';
 import {useEffect} from 'react';
 import React from 'react';
 import './User.scss'; // Import your styles for User component
-export default function User({firstname, lastname, username, profilePicture, bio, email, location, phoneNumber, profession, followers, following, posts}) {
+
+export default function User({firstname, lastname, username, profilePicture, bio, email, location, phoneNumber, profession, followers, following, posts=0}) {
+    const id = localStorage.getItem('userId');
+    const [userData, setUserData] = useState(id);
     return (
         
         <section className="user-profile">
-            <h1 className="profile-title">{firstname}'s Profile</h1>
+            <h1 className="profile-title">{username}'s Profile</h1>
             <div className="profile-header">
                 
             <img src={profilePicture} width="100" height="100" alt="ProfilePicture" className="picture" title="profile-picture"/>
@@ -30,7 +33,8 @@ export default function User({firstname, lastname, username, profilePicture, bio
             </div>
 
             
-                <a href="/edit-profile" className="edit-profile-link">
+                <a href={`/edit-profile/${userData}`} className="edit-profile-link">
+                
                     Edit Profile
                     </a>
         </section>

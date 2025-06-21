@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.scss"; // Assuming you have a CSS file for styling
 function Home(){
-    console.log("Home rendered");
+    
     const [data, setData] = useState(null);
     useEffect(() => {
         

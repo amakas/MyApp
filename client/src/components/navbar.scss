@@ -24,8 +24,8 @@ li{
 .pages-list{
     display: flex;
     flex-direction: row;
-    
-    margin-left: 150px;
+    align-items: center;
+    margin-left: 0px;
     padding: 0;
     list-style: none;
     
@@ -87,17 +87,3 @@ li{
     }
 }
 
-.logo-image{
-    display: flex;
-    align-items: center;
-    font-size: 24px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    
-    img{
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
-    }
-}

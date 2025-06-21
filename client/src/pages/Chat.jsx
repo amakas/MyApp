@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import HomeButton from "../components/buttons/homeButton";
 import "./chat.scss"; // Assuming you have a CSS file for styling
 function Chat(){
-    console.log("Chat rendered");
+    
     const [data, setData] = useState(null);
     useEffect(() => {
         

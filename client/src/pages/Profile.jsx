@@ -1,26 +1,84 @@
-import React from "react";
+import React, { use } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import User from "../components/Profile/User";
 import PostForm from "../components/Profile/PostForm";
 import PostList from "../components/Profile/PostList";
 import "./Profile.scss"; // Assuming you have a CSS file for styling
-
+import { useNavigate } from "react-router-dom";
+const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 function Profile(){
-    console.log("Home rendered");
-    const [data, setData] = useState(null);
+    
+    const [userData, setUserData] = useState("");
+    const { id } = useParams(); 
+    const navigate = useNavigate();
+    const [posts, setPosts] = useState([])
+
+    const profilePictureUrl = userData.profilePicture 
+  ? `${BaseUrl}${userData.profilePicture}` 
+  : null;
+
+
+
     useEffect(() => {
+    const fetchUserData = async () => {
+        const token = localStorage.getItem('token');
+        const id = localStorage.getItem('userId');
         
-        setTimeout(() => {
-            setData({ message: "Hello from Home!" });
-        }, 1000);
-    }, []);
+        if (!token || !id) {
+            navigate('/');
+            return;
+        }
+        
+        const response = await fetch(`/api/users/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+           
+            setUserData(data);
+        } else {
+           navigate('/');
+        }
+    };
+    const fetchPosts = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/');
+            return;
+        }
+        try {
+            const response = await fetch(`/api/posts/post/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                
+                setPosts(data);
+
+            } else {
+                console.error('Failed to fetch posts:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+    
+    if (id) fetchUserData(); 
+     if (id) fetchPosts();
+}, [id]);
+  
     return(
         <div className="profile-page">
-             
-            <User firstname="Maks" lastname="Yasaddas"  username="makson" profilePicture="https://lh4.googleusercontent.com/NmT2y1afsx282HAx3j6ir2HobpAb94KdZags9majVc8g1peNNmjEvkTl_Xu2H051o6vM2UBwytZYRIWNj91TMdS124gKqtZECQqTLT5TtiSViXPKKVmYQafUcAJuzFrzEVCNoDrdsqIq2NRxuKawVbuRN7CcAfQk0iGIHQEaeFzEfX1xH5uA-g=w1280" bio="Sample bio" email="email@.com" location="Americaa" phoneNumber="2342352524124" profession="designer" followers="100" following="50" posts="10"/>
-            <PostForm />
-            <PostList posts={[{id:1, title:"Post 1", content:"Content of post 1"}, {id:2, title:"Post 2", content:"Content of post 2"}]} onPostClick={(id) => console.log("Post clicked:", id)} />
+            <User firstname={userData.firstname} lastname={userData.lastname}  username={userData.username} profilePicture={profilePictureUrl} bio={userData.bio} email={userData.email} location={userData.location} phoneNumber={userData.phoneNumber} profession={userData.profession} followers={userData.followers} following={userData.following} posts={userData.posts}/>
+            <PostForm setPosts={setPosts}/>
+            <PostList posts={posts}  />
             
         </div>
     )

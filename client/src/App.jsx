@@ -12,27 +12,35 @@ import "./main.scss"; // Import your main styles
 import EditProfile from "./components/Profile/EditProfile"; // Import EditProfile page if needed
 import Terms from "./pages/Terms"; 
 import PrivacyPolicy from "./pages/Privacy"; 
+import ProtectedRoute from "./pages/ProtectedRoute"; // Import ProtectedRoute for protected routes
 function App() {
   return (
-    <React.StrictMode>
+    <div className="app">
       <BrowserRouter>
       <Navbar />
+      <main className="main-content">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
+        
+      
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
-        {/* Add more routes as needed */}
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+           <Route element={<ProtectedRoute />}>
+           <Route path="/edit-profile/:id" element={<EditProfile />} />
+           <Route path="/home/:id" element={<Home />} />
+        <Route path="/chat/:id" element={<Chat />} />
+        <Route path="/settings/:id" element={<Settings />} />
+    <Route path="/profile/:id" element={<Profile />} />
+  </Route>
+        <Route path="*" element={<h1>Page Not Found</h1>} />  
       </Routes>
+      
+      </main>
       <Footer />
     </BrowserRouter>
+    </div>
     
-    </React.StrictMode>
     
     
   );

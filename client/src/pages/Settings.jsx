@@ -5,7 +5,7 @@ import HomeButton from "../components/buttons/homeButton";
 import "./Settings.scss"; // Assuming you have a CSS file for styling
 
 function Settings(){
-    console.log("Home rendered");
+    
     const [data, setData] = useState(null);
     useEffect(() => {
         
@@ -16,8 +16,10 @@ function Settings(){
     return(
         <div className="settings-page">
             <h1>Settings</h1>
+            <p>Configure your settings here</p>
+
             <HomeButton />
-            
+
         </div>
     )
     

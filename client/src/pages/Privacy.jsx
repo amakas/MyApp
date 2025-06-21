@@ -1,6 +1,8 @@
+import "./Privacy.scss"; 
+
 export default function PrivacyPolicy() {
     return (
-        <div className="privacy-policy">
+        <div className="privacy-page">
             <h1>Privacy Policy</h1>
             <p>Last updated: June 1, 2025</p>
             <p>

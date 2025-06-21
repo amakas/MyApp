@@ -2,7 +2,7 @@ export default function LoginButton() {
     return (
         <div>
             <button className="login-button">
-                <a href="/login">Login</a>
+                <a href="/">Login</a>
             </button>
         </div>
     );

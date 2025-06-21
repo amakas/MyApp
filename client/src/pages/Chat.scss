@@ -1,7 +1,6 @@
+@use  '../styles/mixins';
+
 .chat-page{
-  
-  height: calc(100% - 60px); /* Adjust for footer height */
- 
+  @include mixins.page;
   width: 100%;
- 
 }

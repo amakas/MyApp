@@ -1,39 +1,77 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
-import './Login.scss'; // Assuming you have a CSS file for styling
+import { useNavigate } from 'react-router-dom';
+import './Login.scss';
 
-function Login(){
-    console.log("Chat rendered");
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        
-        setTimeout(() => {
-            setData({ message: "Hello from Home!" });
-        }, 1000);
-    }, []);
-    return(
-        <div className="login-page">
-            <h1>Login</h1>
-            <p>Please login</p>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                // Handle login logic here
-                console.log("Login form submitted");
-            }}>
-                <div>
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" id="username" name="username" required />
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" required />
-                </div>
-                <button type="submit">Login</button>
+function Login() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
-            </form>
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData) 
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId); 
+        navigate(`/profile/${data.userId}`);
+      } else {
+        console.error('Login failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  return(
+    <div className="login-page">
+      <h1>Login</h1>
+      <p>Please login</p>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input 
+            type="email"  
+            id="email" 
+            name="email" 
+            value={formData.email} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
-    )
-    
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            value={formData.password} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+  )
 }
+
 export default Login;
