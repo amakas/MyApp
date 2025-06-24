@@ -33,10 +33,7 @@ export default function User({firstname, lastname, username, profilePicture, bio
             </div>
 
             
-                <a href={`/edit-profile/${userData}`} className="edit-profile-link">
                 
-                    Edit Profile
-                    </a>
         </section>
     )
 }

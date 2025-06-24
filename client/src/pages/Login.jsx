@@ -29,6 +29,7 @@ function Login() {
       const data = await response.json();
       
       if (response.ok) {
+        localStorage.clear()
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.userId); 
         navigate(`/profile/${data.userId}`);

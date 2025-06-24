@@ -11,9 +11,11 @@ const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 function Profile(){
     
     const [userData, setUserData] = useState("");
-    const { id } = useParams(); 
-    const navigate = useNavigate();
+   
     const [posts, setPosts] = useState([])
+
+     const { id } = useParams(); 
+    const navigate = useNavigate();
 
     const profilePictureUrl = userData.profilePicture 
   ? `${BaseUrl}${userData.profilePicture}` 
@@ -52,14 +54,14 @@ function Profile(){
             return;
         }
         try {
-            const response = await fetch(`/api/posts/post/${id}`, {
+            const response = await fetch(`/api/posts/user/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
             if (response.ok) {
                 const data = await response.json();
-                
+                console.log(data)
                 setPosts(data);
 
             } else {
@@ -78,7 +80,7 @@ function Profile(){
         <div className="profile-page">
             <User firstname={userData.firstname} lastname={userData.lastname}  username={userData.username} profilePicture={profilePictureUrl} bio={userData.bio} email={userData.email} location={userData.location} phoneNumber={userData.phoneNumber} profession={userData.profession} followers={userData.followers} following={userData.following} posts={userData.posts}/>
             <PostForm setPosts={setPosts}/>
-            <PostList posts={posts}  />
+            <PostList posts={posts} setPosts={setPosts} />
             
         </div>
     )

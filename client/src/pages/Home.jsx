@@ -2,23 +2,45 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Home.scss"; // Assuming you have a CSS file for styling
+import "./Home.scss"; 
+import PostList from "../components/allPosts";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 function Home(){
+    const [posts, setPosts] = useState([])
     
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        
-        setTimeout(() => {
-            setData({ message: "Hello from Home!" });
-        }, 1000);
-    }, []);
+    const navigate = useNavigate()
+    const { id } = useParams();
+    useEffect( () => {
+        const fetchPosts = async () => {
+        const token = localStorage.getItem('token')
+            if(!token){
+                navigate("/")
+                return
+            }
+        try{
+        const response = await fetch(`/api/posts/${id}`, {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }     
+        });
+        if(response.ok){
+        const  data = await response.json();
+        setPosts(data);
+            }  else{
+            console.error('Failed to fetch posts:', response.statusText)
+            }
+        } catch (error){
+            console.error('Error fetching posts:', error);
+        }
+     }
+     if(id) fetchPosts();
+    }, [id]);
+
     return(
         <div className="home-page">
             <h1>Home Page</h1>
-            <p>Welcome to the home page!</p>
-            <div><h2><Link to="/profile" >Go to profile</Link></h2></div>
-            <div><h2><Link to="/chat" >Go to chat</Link></h2></div>
-
+            <PostList  posts={posts}/>
         </div>
     )
     

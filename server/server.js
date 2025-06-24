@@ -34,9 +34,7 @@ app.use((err, req, res, next) => {
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
+
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;

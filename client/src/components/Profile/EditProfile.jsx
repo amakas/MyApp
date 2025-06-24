@@ -43,8 +43,7 @@ export default function EditProfile() {
           email: user.email || '',
           location: user.location || '',
           phoneNumber: user.phoneNumber || '',
-          profession: user.profession || '',
-          
+          profession: user.profession || ''
         });
          setExistingProfilePicture(user.profilePicture || '');
       } else {
@@ -111,9 +110,6 @@ export default function EditProfile() {
       <form onSubmit={handleSubmit} className="edit-profile-form">
         <div className="edit-picture">
           <label htmlFor="profile-picture">Profile Picture:</label>
-          {existingProfilePicture && (
-            <img src={`http://localhost:5000/${existingProfilePicture}`} alt="Current profile" style={{ width: '100px', borderRadius: '8px' }} />
-          )}
           <input type="file" id="profile-picture" name="profilePicture" onChange={handleFileChange} accept="image/*" />
         </div>
         <div className="edit-details">
