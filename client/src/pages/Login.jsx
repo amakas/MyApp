@@ -32,6 +32,7 @@ function Login() {
         localStorage.clear()
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.userId); 
+        localStorage.setItem('username', data.username)
         navigate(`/profile/${data.userId}`);
       } else {
         console.error('Login failed:', data.message);

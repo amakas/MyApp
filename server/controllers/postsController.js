@@ -60,7 +60,7 @@ export const getPosts = async (req,res) => {
     const allPosts = await Post.find({ userId: { $ne: userId } }).sort({ createdAt: -1 })
     res.status(200).json(  allPosts );
   } catch (error) {
-    console.error("Error fetching user posts:", error);
+    console.error("Error fetching posts:", error);
     res.status(500).json({ 
       message: 'Internal server error',
       error: error.message 

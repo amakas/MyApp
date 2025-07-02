@@ -1,0 +1,63 @@
+.post-form {
+  background-color: rgb(232, 235, 190);
+  width: 40%;
+  padding: 30px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.div-title,
+.div-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 10px;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.div-content {
+  justify-content: left;
+}
+
+.title {
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.content {
+  resize: none;
+  height: auto;
+  padding: 5px;
+  height: 50px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  width: 80%;
+  border: 1px solid #ccc;
+}
+
+.post-button {
+  align-self: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}

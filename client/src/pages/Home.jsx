@@ -14,6 +14,7 @@ function Home(){
     useEffect( () => {
         const fetchPosts = async () => {
         const token = localStorage.getItem('token')
+        const id = localStorage.getItem('userId')
             if(!token){
                 navigate("/")
                 return

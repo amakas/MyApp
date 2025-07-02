@@ -8,7 +8,7 @@ import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
-function Profile() {
+function UserProfile() {
   const [userData, setUserData] = useState("");
 
   const [posts, setPosts] = useState([]);
@@ -23,7 +23,7 @@ function Profile() {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
-      const id = localStorage.getItem("userId");
+      const id = localStorage.getItem("personId");
 
       if (!token || !id) {
         navigate("/");
@@ -46,7 +46,7 @@ function Profile() {
     };
     const fetchPosts = async () => {
       const token = localStorage.getItem("token");
-      const id = localStorage.getItem("userId");
+      const id = localStorage.getItem("personId");
       if (!token) {
         navigate("/");
         return;
@@ -90,9 +90,9 @@ function Profile() {
         posts={posts}
         pictureClass={pictureClass}
       />
-      <PostForm setPosts={setPosts} />
+
       <PostList posts={posts} setPosts={setPosts} />
     </div>
   );
 }
-export default Profile;
+export default UserProfile;

@@ -13,7 +13,7 @@ export default function PostList({ posts }) {
     <div className="post-list">
       {posts.map((post) => (
         <div
-          key={post.id || post._id}
+          key={ post._id}
           className="post-item"
           >
           <h2>{post.title}</h2>

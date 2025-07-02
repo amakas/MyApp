@@ -1,0 +1,48 @@
+@mixin border{
+    border-radius: 15px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.my-message,
+.someone-message {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  margin: 5px;
+  padding: 5px;
+  animation: fadeInUp 0.2s ease-out;
+}
+
+.my-message {
+  align-items: flex-end; 
+}
+
+
+.message-details {
+  display: flex;
+  gap: 10px;
+  font-size: x-small;
+  color: gray;
+  margin-bottom: 3px;
+  margin-left:5px;
+  margin-right:5px;
+}
+
+.message-content {
+  @include border;
+  background-color: aliceblue;
+  padding: 5px;
+  font-size: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+}

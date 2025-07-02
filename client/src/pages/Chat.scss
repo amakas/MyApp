@@ -1,6 +1,52 @@
-@use  '../styles/mixins';
+@use "../styles/mixins";
 
-.chat-page{
+::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-page {
   @include mixins.page;
   width: 100%;
+  padding-top: 20px;
+}
+
+.display {
+  height: 50vh;
+  width: 30%;
+  background-color: #ff9;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-message {
+  font-size: 16px;
+  height: 50px;
+  width: 250px;
+  overflow: auto;
+  text-wrap: wrap;
+  resize: none;
+  border-radius: 5px;
+  margin: 3px;
+}
+
+.send-message {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: lightgreen;
+  border: 1px double green;
+  margin: auto 3px;
+  &:hover {
+    filter: brightness(1.2);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
 }

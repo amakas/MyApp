@@ -5,44 +5,64 @@ import { Link } from "react-router-dom";
 import "./navbar.scss"; // Assuming you have a CSS file for styling
 import LoginButton from "./buttons/loginButton";
 import RegisterButton from "./buttons/registerButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
+function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const id = localStorage.getItem("userId");
+  const [userId, setUserId] = useState(id);
 
-function Navbar(){
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const id = localStorage.getItem('userId');
-    const [userId, setUserId] = useState(id);
-    
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-    
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        
-        if (token) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, []);
-    
-   
-    return(
-        <div >
-            <nav className="navbar">
-                <ol className="pages-list">
-                    <li><Link to={`/home/${userId}`}>Home</Link> </li>
-                    <li><Link to={`/chat/${userId}`}>Chat</Link></li>
-                     <li><Link to={`/settings/${userId}`}>Settings</Link></li> 
-                    <li><Link to={`/profile/${userId}`} >Profile</Link></li>
-                </ol>
-                <ol className="buttons-list">
-                <li><RegisterButton /></li>
-                <li><LoginButton /></li>
-                </ol>
-               
-            </nav>
+  return (
+    <div>
+      <nav className="navbar">
+        <ol className="pages-list">
+          <li>
+            <Link to={`/home/${userId}`}>Home</Link>{" "}
+          </li>
+          <li>
+            <Link to={`/chat/${userId}`}>Chat</Link>
+          </li>
+          <li>
+            <Link to={`/settings/${userId}`}>Settings</Link>
+          </li>
+          <li>
+            <Link to={`/profile/${userId}`}>Profile</Link>
+          </li>
+          <li>
+            {" "}
+            <Link to={`/people/${userId}`}>People</Link>
+          </li>
+        </ol>
+        <div className="search-bar">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search"
+          ></input>{" "}
+          <FontAwesomeIcon className="glass" icon={faMagnifyingGlass} />
         </div>
-    )
-    
+
+        <ol className="buttons-list">
+          <li>
+            <RegisterButton />
+          </li>
+          <li>
+            <LoginButton />
+          </li>
+        </ol>
+      </nav>
+    </div>
+  );
 }
 export default Navbar;
