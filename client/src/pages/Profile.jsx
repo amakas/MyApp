@@ -9,11 +9,10 @@ import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 function Profile() {
-  const [userData, setUserData] = useState("");
-
+  const [userData, setUserData] = useState({});
+  const id = localStorage.getItem("userId");
   const [posts, setPosts] = useState([]);
 
-  const { id } = useParams();
   const navigate = useNavigate();
 
   const profilePictureUrl = userData.profilePicture
@@ -85,8 +84,8 @@ function Profile() {
         location={userData.location}
         phoneNumber={userData.phoneNumber}
         profession={userData.profession}
-        followers={userData.followers}
-        following={userData.following}
+        followersArr={userData.followers}
+        followingArr={userData.following}
         posts={posts}
         pictureClass={pictureClass}
       />

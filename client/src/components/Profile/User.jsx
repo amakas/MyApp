@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import React from "react";
 import "./User.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function User({
   firstname,
@@ -13,14 +14,23 @@ export default function User({
   location,
   phoneNumber,
   profession,
-  followers,
-  following,
-  posts,
+  followersArr = [],
+  followingArr = [],
+  posts = [],
   pictureClass,
 }) {
+  const navigate = useNavigate();
   const id = localStorage.getItem("userId");
   const [userData, setUserData] = useState(id);
   const postLength = posts.length;
+  const followers = followersArr.length;
+  const following = followingArr.length;
+  const handleFollowers = () => {
+    navigate(`/followers/${id}`);
+  };
+  const handleFollowing = () => {
+    navigate(`/following/${id}`);
+  };
   return (
     <section className="user-profile">
       <h1 className="profile-title">{username}'s Profile</h1>
@@ -49,9 +59,15 @@ export default function User({
         <p className="profession">Profession: {profession}</p>
       </div>
       <div className="user-stats">
-        <p className="followers">Followers: {followers}</p>
-        <p className="following">Following:{following}</p>
-        <p className="posts">Posts: {postLength}</p>
+        <p onClick={handleFollowers} className="followers">
+          Followers: {followers}
+        </p>
+        <p onClick={handleFollowing} className="following">
+          Following:{following}
+        </p>
+        <a href="#posts">
+          <p className="posts">Posts: {postLength}</p>
+        </a>
       </div>
     </section>
   );

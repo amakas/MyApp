@@ -15,6 +15,8 @@ import PrivacyPolicy from "./pages/Privacy";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { People } from "./pages/People";
 import UserProfile from "./pages/UserProfile";
+import { FollowersList } from "./pages/Followers";
+import { FollowingList } from "./pages/Following";
 function App() {
   return (
     <div className="app">
@@ -34,6 +36,8 @@ function App() {
               <Route path="/profile/:id" element={<Profile />} />
               <Route path="/people/:id" element={<People />} />
               <Route path="/userProfile/:id" element={<UserProfile />} />
+              <Route path="/followers/:id" element={<FollowersList />} />
+              <Route path="/following/:id" element={<FollowingList />} />
             </Route>
             <Route path="*" element={<h1>Page Not Found</h1>} />
           </Routes>

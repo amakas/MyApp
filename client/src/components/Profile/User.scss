@@ -67,3 +67,20 @@
   border-radius: 10px;
   font-weight: bold;
 }
+
+.following,
+.followers,
+.posts {
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.1);
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}

@@ -11,7 +11,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const id = localStorage.getItem("userId");
-  const [userId, setUserId] = useState(id);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,20 +27,20 @@ function Navbar() {
       <nav className="navbar">
         <ol className="pages-list">
           <li>
-            <Link to={`/home/${userId}`}>Home</Link>{" "}
+            <Link to={`/home/${id}`}>Home</Link>{" "}
           </li>
           <li>
-            <Link to={`/chat/${userId}`}>Chat</Link>
+            <Link to={`/chat/${id}`}>Chat</Link>
           </li>
           <li>
-            <Link to={`/settings/${userId}`}>Settings</Link>
+            <Link to={`/settings/${id}`}>Settings</Link>
           </li>
           <li>
-            <Link to={`/profile/${userId}`}>Profile</Link>
+            <Link to={`/profile/${id}`}>Profile</Link>
           </li>
           <li>
             {" "}
-            <Link to={`/people/${userId}`}>People</Link>
+            <Link to={`/people/${id}`}>People</Link>
           </li>
         </ol>
         <div className="search-bar">

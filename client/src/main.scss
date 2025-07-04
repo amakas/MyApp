@@ -1,23 +1,25 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #B9E3C6;
-    color: #333;
-    text-align: center;
-    display:flex;
-    flex-direction: column;
-    
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #b9e3c6;
+  color: #333;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 .app {
@@ -28,12 +30,12 @@ html, body, #root {
 
 .main-content {
   flex: 1;
-  padding-top: 70px; 
-  padding-bottom: 60px; 
+  padding-top: 70px;
+  padding-bottom: 60px;
 }
 
 footer {
-  height: 60px; 
+  height: 60px;
   background: #333;
   color: white;
 }

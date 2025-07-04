@@ -65,7 +65,7 @@ export default function PostList({ posts, setPosts }) {
   };
 
   return (
-    <div className="post-list">
+    <div id="posts" className="post-list">
       <h2 className="user-posts-title">Posts</h2>
       {posts.map((post) => (
         <div key={post._id} className="post-item">
