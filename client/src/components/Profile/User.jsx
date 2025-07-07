@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import React from "react";
 import "./User.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function User({
   firstname,
@@ -20,7 +20,8 @@ export default function User({
   pictureClass,
 }) {
   const navigate = useNavigate();
-  const id = localStorage.getItem("userId");
+  const { id } = useParams();
+  const userId = localStorage.getItem("userId");
   const [userData, setUserData] = useState(id);
   const postLength = posts.length;
   const followers = followersArr.length;
@@ -58,6 +59,7 @@ export default function User({
         <p className="number">Phone Number: {phoneNumber}</p>
         <p className="profession">Profession: {profession}</p>
       </div>
+
       <div className="user-stats">
         <p onClick={handleFollowers} className="followers">
           Followers: {followers}

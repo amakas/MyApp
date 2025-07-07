@@ -11,7 +11,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const id = localStorage.getItem("userId");
-
   useEffect(() => {
     const token = localStorage.getItem("token");
 

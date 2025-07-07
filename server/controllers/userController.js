@@ -125,3 +125,30 @@ export const follow = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const followers = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+    const followersId = user.followers;
+    const followers = await User.find({ _id: followersId }, "-password");
+    res.status(200).json(followers);
+  } catch (error) {
+    console.error("Server error", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const followings = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    const followingsId = user.following;
+    const followings = await User.find({ _id: followingsId }, "-password");
+    res.status(200).json(followings);
+  } catch (error) {
+    console.error("Server error", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

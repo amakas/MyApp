@@ -1,0 +1,26 @@
+.stats {
+  padding: 0;
+  margin-bottom: -15px;
+  margin-top: 10px;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.like,
+.share,
+.report,
+.comments {
+  padding: 0.5rem;
+  width: 80px;
+}
+
+.liked {
+  background-color: aliceblue;
+  border-radius: 50%;
+}
+
+.notLiked {
+  background-color: rgb(243, 123, 123);
+}

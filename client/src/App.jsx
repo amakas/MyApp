@@ -17,6 +17,7 @@ import { People } from "./pages/People";
 import UserProfile from "./pages/UserProfile";
 import { FollowersList } from "./pages/Followers";
 import { FollowingList } from "./pages/Following";
+import { Comments } from "./pages/Comments";
 function App() {
   return (
     <div className="app">
@@ -38,6 +39,7 @@ function App() {
               <Route path="/userProfile/:id" element={<UserProfile />} />
               <Route path="/followers/:id" element={<FollowersList />} />
               <Route path="/following/:id" element={<FollowingList />} />
+              <Route path="/comments/:id/:postId" element={<Comments />} />
             </Route>
             <Route path="*" element={<h1>Page Not Found</h1>} />
           </Routes>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
-export const ListOfPeople = ({ people }) => {
+export const ListOfPeople = ({ people, type }) => {
   const navigate = useNavigate();
   const [peopleState, setPeopleState] = useState(people);
   const userId = localStorage.getItem("userId");
@@ -12,10 +12,12 @@ export const ListOfPeople = ({ people }) => {
   }, [people]);
   return (
     <div className="people-list">
-      <div className="h-container">
-        <h2 className="choice">Global</h2>
-        <h2 className="choice">Follows</h2>
-      </div>
+      {type === "people" && (
+        <div className="h-container">
+          <h2 className="choice">Global</h2>
+          <h2 className="choice">Follows</h2>
+        </div>
+      )}
       <label htmlFor="search">Search for people:</label>
       <input
         className="search-people"
@@ -42,7 +44,7 @@ export const ListOfPeople = ({ people }) => {
           e.stopPropagation();
           const token = localStorage.getItem("token");
           const userId = localStorage.getItem("userId");
-
+          if (personId === userId) retrun;
           try {
             const response = await fetch(`/api/users/follow/${personId}`, {
               method: "PUT",

@@ -34,7 +34,7 @@ export const People = () => {
     <div className="people-page">
       <h1>People</h1>
 
-      <ListOfPeople people={people} />
+      <ListOfPeople people={people} type="people" />
     </div>
   );
 };
