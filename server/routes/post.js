@@ -21,4 +21,5 @@ router.put("/:id", verifyToken, updatePost);
 router.put("/:userId/:postId", verifyToken, like);
 router.put("/share/:postId", verifyToken, share);
 router.post("/report/:postId", verifyToken, report);
+
 export default router;

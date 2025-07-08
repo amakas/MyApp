@@ -113,8 +113,6 @@ export const like = async (req, res) => {
     const post = await Post.findById(postId);
     const user = await User.findById(userId);
 
-    console.log(post);
-
     if (!post.likes.includes(userId)) {
       post.likes.push(userId);
       await post.save();
@@ -148,6 +146,7 @@ export const share = async (req, res) => {
   const { postId } = req.params;
   try {
     await Post.findByIdAndUpdate(postId, { $inc: { shares: 1 } });
+    res.status(200).json({ message: "shared successfuly", success: true });
   } catch (error) {
     console.error("Error sharing", error);
     res.status(500).json({ message: "Internal server error" });
@@ -163,6 +162,7 @@ export const report = async (req, res) => {
     const post = await Post.findById(postId);
     post.reports.push(reason);
     await post.save();
+    res.status(200).json({ message: "reported successfuly", success: true });
   } catch (error) {
     console.error("Error reporting", error);
     res.status(500).json({ message: "Internal server error" });

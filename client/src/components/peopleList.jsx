@@ -15,7 +15,7 @@ export const ListOfPeople = ({ people, type }) => {
       {type === "people" && (
         <div className="h-container">
           <h2 className="choice">Global</h2>
-          <h2 className="choice">Follows</h2>
+          <h2 className="choice">Following</h2>
         </div>
       )}
       <label htmlFor="search">Search for people:</label>

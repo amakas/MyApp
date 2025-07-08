@@ -29,8 +29,8 @@ const postSchema = new mongoose.Schema({
     default: [],
   },
   comments: {
-    type: Array,
-    default: [],
+    type: Number,
+    default: 0,
   },
   shares: {
     type: Number,
