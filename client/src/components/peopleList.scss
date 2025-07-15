@@ -40,11 +40,12 @@
 .h-container {
   display: flex;
   flex-direction: row;
-  gap: 100px;
-  margin: auto;
+  gap: 150px;
+  margin: 30px auto;
 }
 
 .choice {
+  font-size: 26px;
   &:hover {
     color: white;
     cursor: pointer;
@@ -67,6 +68,7 @@
   letter-spacing: 0.5px;
   border: none;
   box-shadow: 0 3px 4px #333;
+  margin: 5px;
   &:hover {
     cursor: pointer;
     box-shadow: 0 3px 4px #ccc;
@@ -84,4 +86,12 @@
 }
 .message-button {
   background-color: #907676;
+}
+
+.active {
+  color: white;
+}
+
+.person-details p {
+  font-size: 14px;
 }

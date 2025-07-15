@@ -1,26 +1,100 @@
-.stats {
-  padding: 0;
-  margin-bottom: -15px;
-  margin-top: 10px;
-  border-top: 1px solid #333;
+.post-list {
+  max-width: 800px;
+  margin: auto;
+  padding: 0 10px;
   display: flex;
-  justify-content: space-evenly;
-  gap: 20px;
+  flex-direction: column;
+
+  font-family: "Segoe UI", sans-serif;
 }
 
-.like,
-.share,
-.report,
-.comments {
-  padding: 0.5rem;
-  width: 80px;
+.h-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.choice {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.choice:hover {
+  border-color: #3498db;
+}
+
+.post-item {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.post-item h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.post-item p {
+  font-size: 15px;
+  color: #555;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid #2e2b2b;
+}
+
+.stats button,
+.stats p {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.stats button:hover {
+  color: #3498db;
 }
 
 .liked {
-  background-color: aliceblue;
-  border-radius: 50%;
+  color: #e74c3c !important;
 }
 
 .notLiked {
-  background-color: rgb(243, 123, 123);
+  color: #aaa;
+}
+
+.share-icon,
+.comments-icon,
+.report-icon,
+.like-icon {
+  font-size: 14px;
+}
+
+.views {
+  color: #888;
+  font-size: 13px;
 }

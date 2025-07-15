@@ -3,30 +3,38 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
-export const ListOfPeople = ({ people, type }) => {
+export const ListOfPeople = ({
+  people,
+  isGlobal,
+  setPeople,
+  type,
+  setIsGlobal,
+  setFollowing,
+}) => {
   const navigate = useNavigate();
-  const [peopleState, setPeopleState] = useState(people);
+
   const userId = localStorage.getItem("userId");
-  useEffect(() => {
-    setPeopleState(people);
-  }, [people]);
+
   return (
     <div className="people-list">
       {type === "people" && (
         <div className="h-container">
-          <h2 className="choice">Global</h2>
-          <h2 className="choice">Following</h2>
+          <h2
+            className={`choice ${isGlobal ? "active" : ""}`}
+            onClick={() => setIsGlobal(true)}
+          >
+            Global
+          </h2>
+          <h2
+            className={`choice ${!isGlobal ? "active" : ""}`}
+            onClick={() => setIsGlobal(false)}
+          >
+            Following
+          </h2>
         </div>
       )}
-      <label htmlFor="search">Search for people:</label>
-      <input
-        className="search-people"
-        id="search"
-        name="search"
-        type="text"
-        placeholder="Username"
-      ></input>
-      {peopleState.map((person) => {
+
+      {people.map((person) => {
         const personId = person._id;
         const isFollowing = person.followers.includes(userId);
 
@@ -44,7 +52,7 @@ export const ListOfPeople = ({ people, type }) => {
           e.stopPropagation();
           const token = localStorage.getItem("token");
           const userId = localStorage.getItem("userId");
-          if (personId === userId) retrun;
+          if (personId === userId) return;
           try {
             const response = await fetch(`/api/users/follow/${personId}`, {
               method: "PUT",
@@ -52,18 +60,41 @@ export const ListOfPeople = ({ people, type }) => {
               body: JSON.stringify({ userId }),
             });
             if (response.ok) {
-              setPeopleState((prev) =>
+              const isCurrentlyFollowing = people
+                .find((p) => p._id === personId)
+                ?.followers.includes(userId);
+
+              setPeople((prev) =>
                 prev.map((p) =>
                   p._id === personId
                     ? {
                         ...p,
-                        followers: p.followers.includes(userId)
+                        followers: isCurrentlyFollowing
                           ? p.followers.filter((id) => id !== userId)
                           : [...p.followers, userId],
                       }
                     : p
                 )
               );
+
+              setFollowing((prev) => {
+                if (isCurrentlyFollowing) {
+                  return prev.filter((p) => p._id !== personId);
+                } else {
+                  const newFollow = people.find((p) => p._id === personId);
+                  if (newFollow) {
+                    return [
+                      ...prev,
+                      {
+                        ...newFollow,
+                        followers: [...newFollow.followers, userId],
+                      },
+                    ];
+                  } else {
+                    return prev;
+                  }
+                }
+              });
             } else {
               console.error("Fail to follow");
             }
@@ -82,11 +113,11 @@ export const ListOfPeople = ({ people, type }) => {
               title="Avatar"
             />
             <div className="person-details">
-              <p>{person.username}</p>
-              <p>
+              <p className="person-username">{person.username}</p>
+              <p className="person-name">
                 {person.firstname} {person.lastname}
               </p>{" "}
-              <p>{person.bio}</p>
+              <p className="person-bio">{person.bio}</p>
             </div>
             <div>
               <button

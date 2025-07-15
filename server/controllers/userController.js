@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/user.js";
+import Post from "../models/Post.js";
 
 export const getUser = async (req, res) => {
   const { id } = req.params;
@@ -147,6 +148,19 @@ export const followings = async (req, res) => {
     const followingsId = user.following;
     const followings = await User.find({ _id: followingsId }, "-password");
     res.status(200).json(followings);
+  } catch (error) {
+    console.error("Server error", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getUserByPost = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const post = await Post.findById(postId);
+    const user = await User.findById(post.userId);
+    res.status(200).json(user);
   } catch (error) {
     console.error("Server error", error);
     res.status(500).json({ message: "Internal server error" });

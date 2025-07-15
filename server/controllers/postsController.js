@@ -1,7 +1,7 @@
 import Post from "../models/Post.js";
 import User from "../models/user.js";
 export const createPost = async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, username } = req.body;
   try {
     if (!title || !content) {
       return res.status(400).json({ message: "title and content required" });
@@ -10,16 +10,13 @@ export const createPost = async (req, res) => {
       title,
       content,
       userId: req.userId,
+      username,
     });
     await newPost.save();
     return res.json({
       success: true,
       message: "Posted successfully",
-      post: {
-        id: newPost._id,
-        title: newPost.title,
-        content: newPost.content,
-      },
+      post: newPost,
     });
   } catch (error) {
     console.error("Post error:", error);
@@ -145,8 +142,21 @@ export const like = async (req, res) => {
 export const share = async (req, res) => {
   const { postId } = req.params;
   try {
-    await Post.findByIdAndUpdate(postId, { $inc: { shares: 1 } });
-    res.status(200).json({ message: "shared successfuly", success: true });
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      { $inc: { shares: 1 } },
+      { new: true }
+    );
+    console.log(post);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.status(200).json({
+      message: "Shared successfully",
+      success: true,
+      shares: post.shares,
+    });
   } catch (error) {
     console.error("Error sharing", error);
     res.status(500).json({ message: "Internal server error" });
@@ -166,5 +176,62 @@ export const report = async (req, res) => {
   } catch (error) {
     console.error("Error reporting", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getPost = async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const post = await Post.findById(postId);
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.error("Error fetching post", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getViews = async (req, res) => {
+  const postId = req.params.postId;
+  const userId = req.user.id;
+
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post.viewedBy.includes(userId)) {
+      post.views += 1;
+      post.viewedBy.push(userId);
+      await post.save();
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("View error", err);
+    res.status(500).send("Internal error");
+  }
+};
+
+export const getFollowingsPosts = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId);
+    const followings = user.following;
+    const followingPosts = await Post.find({ userId: { $in: followings } });
+
+    res.status(200).json(followingPosts);
+  } catch (error) {
+    console.error("fetching error", err);
+    res.status(500).send("Internal error");
+  }
+};
+
+export const deletepostsByUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    await Post.deleteMany({ userId });
+    res.status(200).json({ message: "deleted successfuly" });
+  } catch (error) {
+    console.error(" error deleting posts", err);
+    res.status(500).send("Internal error");
   }
 };

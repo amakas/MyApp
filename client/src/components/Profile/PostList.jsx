@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./PostList.scss";
+
+import Post from "../Post";
 
 export default function PostList({ posts, setPosts }) {
   const userId = localStorage.getItem("userId");
   if (!posts || posts.length === 0) {
-    return <div className="post-list">No posts</div>;
+    return <div className="post-list">No posts available.</div>;
   }
   const [editingId, setEditingId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
   const { id } = useParams();
+
+  const token = localStorage.getItem("token");
+
   const handleEditClick = (post) => {
     setEditingId(post._id);
     setEditedContent(post.content);
   };
 
   const handleSave = async (id) => {
-    const token = localStorage.getItem("token");
     try {
       const response = await fetch(`/api/posts/${id}`, {
         method: "PUT",
@@ -63,51 +66,49 @@ export default function PostList({ posts, setPosts }) {
     }
   };
 
+  const handleDeleteAll = async () => {
+    confirm("Are you sure, you want to delete all your posts?");
+    try {
+      const response = await fetch(`/api/posts/deleteAll/${userId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        setPosts([]);
+      }
+    } catch (error) {
+      console.error("Fail to delete posts", error);
+    }
+  };
+
   return (
     <div id="posts" className="post-list">
       <h2 className="user-posts-title">Posts</h2>
-      {posts.map((post) => {
+      {posts.map((post, index) => {
+        const key = post._id || `temp-${index}`;
+        if (!post._id) return null;
         return (
-          <div key={post._id} className="post-item">
-            <h2>{post.title}</h2>
-            {editingId === post._id ? (
-              <>
-                <textarea
-                  value={editedContent}
-                  onChange={(e) => setEditedContent(e.target.value)}
-                />
-                <button onClick={() => handleSave(post._id)}>Save</button>
-                <button onClick={() => setEditingId(null)}>Cancel</button>
-              </>
-            ) : (
-              <div>
-                <p>{post.content}</p>
-
-                {id === userId && (
-                  <>
-                    <button
-                      className="delete-button"
-                      onClick={() => handleDelete(post._id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="edit-button"
-                      onClick={() => handleEditClick(post)}
-                    >
-                      Edit
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
+          <Post
+            key={key}
+            post={post}
+            canEdit={id === userId}
+            onDelete={handleDelete}
+            onEdit={handleEditClick}
+            onSave={handleSave}
+            editingId={editingId}
+            setEditingId={setEditingId}
+            editedContent={editedContent}
+            setEditedContent={setEditedContent}
+            setPosts={setPosts}
+          />
         );
       })}
       <>
         {" "}
         {id === userId ? (
-          <button className="delete-all">Delete all posts</button>
+          <button onClick={handleDeleteAll} className="delete-all">
+            Delete all posts
+          </button>
         ) : (
           ""
         )}

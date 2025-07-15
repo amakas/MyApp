@@ -16,6 +16,11 @@ const postSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  username: {
+    type: String,
+    trim: true,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,
@@ -40,6 +45,8 @@ const postSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  views: { type: Number, default: 0 },
+  viewedBy: Array,
 });
 
 const Post = mongoose.model("Post", postSchema);

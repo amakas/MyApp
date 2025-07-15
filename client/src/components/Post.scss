@@ -1,0 +1,12 @@
+.usernameandphoto {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.post-username {
+  margin-top: 15px;
+}

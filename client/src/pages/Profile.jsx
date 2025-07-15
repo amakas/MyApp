@@ -89,7 +89,7 @@ function Profile() {
         posts={posts}
         pictureClass={pictureClass}
       />
-      <PostForm setPosts={setPosts} />
+      <PostForm posts={posts} setPosts={setPosts} />
       <PostList posts={posts} setPosts={setPosts} />
     </div>
   );

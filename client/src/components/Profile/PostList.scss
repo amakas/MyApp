@@ -1,75 +1,153 @@
 .post-list {
-  background-color: rgb(233, 237, 239);
-  width: 60%;
-  margin: 30px auto;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  justify-content: center;
+  gap: 24px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.user-posts-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
 }
 
 .post-item {
-  margin: 20px;
-  padding: 20px;
-  border-bottom: 1px solid black;
-  background-color: aliceblue;
-  box-shadow: 0 3px 5px grey;
-}
-
-.post-item p,
-h2,
-textarea,
-button {
-  margin: 10px;
+  background-color: #fff4c5;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(10, 10, 10, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .post-item p {
-  width: 80%;
-  margin: auto;
-  word-wrap: break-word;
+  font-size: 15px;
+  color: black;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.post-content {
+  padding: 20px;
+}
+.post-textarea {
+  resize: vertical;
+  min-height: 80px;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.post-item button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    filter: brightness(0.9);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .edit-button,
 .delete-button {
-  align-self: center;
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
+  margin-right: 8px;
+}
+
+.edit-button {
+  background-color: #3498db;
   color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
+
   &:hover {
-    filter: brightness(1.2);
-  }
-  &:active {
-    transform: scale(0.95);
+    background-color: #2980b9;
   }
 }
 
 .delete-button {
   background-color: #e74c3c;
+  color: white;
+
+  &:hover {
+    background-color: #c0392b;
+  }
 }
 
 .delete-all {
-  padding: 10px;
-  width: 100px;
-  height: 50px;
   background-color: #e74c3c;
   color: white;
-  font-weight: 600;
-  margin: auto;
-  border: 1px solid #ccc;
-
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: bold;
+  align-self: center;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
   &:hover {
-    filter: brightness(1.2);
-  }
-  &:active {
-    transform: scale(0.95);
+    background-color: #c0392b;
   }
 }
 
-.user-posts-title {
-  font-size: 2rem;
+textarea,
+button {
+  margin-top: 8px;
+}
+
+.save-button,
+.cancel-button {
+  padding: 12px 20px;
+  margin: auto;
+}
+
+.save-button {
+  background-color: greenyellow;
+}
+
+.cancel-button {
+  background-color: rgb(214, 213, 213);
+}
+
+.post-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid #333;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  column-gap: 150px;
+}
+
+.post-username {
+  font-size: 16px;
+  color: #2980b9;
+  font-weight: bold;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #999;
+}
+
+.post-title {
+  font-size: 20px;
+  color: #2c3e50;
+  font-weight: 600;
+  margin-top: 4px;
 }

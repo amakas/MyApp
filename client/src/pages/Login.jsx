@@ -45,10 +45,10 @@ function Login() {
 
   return (
     <div className="login-page">
-      <h1>Login</h1>
-      <p>Please login</p>
+      <h1 className="login-title">Login</h1>
+      <p className="login-subtext">Please login</p>
       <form onSubmit={handleSubmit} className="login-form">
-        <div>
+        <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -59,7 +59,7 @@ function Login() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -72,7 +72,7 @@ function Login() {
         </div>
         <button type="submit">Login</button>
       </form>
-      <p>
+      <p className="register-text">
         Don't have an account? <a href="/register">Register here</a>
       </p>
     </div>

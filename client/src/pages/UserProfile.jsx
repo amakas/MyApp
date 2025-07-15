@@ -13,16 +13,14 @@ function UserProfile() {
   const [posts, setPosts] = useState([]);
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
+  const { id } = useParams();
   const profilePictureUrl = userData.profilePicture
     ? `${BaseUrl}${userData.profilePicture}`
     : `https://ui-avatars.com/api/?name=${userData.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("personId");
-
       if (!token || !id) {
         navigate("/");
         return;
@@ -43,8 +41,6 @@ function UserProfile() {
       }
     };
     const fetchPosts = async () => {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("personId");
       if (!token) {
         navigate("/");
         return;

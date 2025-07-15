@@ -13,6 +13,7 @@ import userRoutes from "./routes/user.js";
 import postRoutes from "./routes/post.js";
 import messageRoutes from "./routes/message.js";
 import commentRoutes from "./routes/comment.js";
+import searchRoutes from "./routes/search.js";
 
 import { handleSocketConnection } from "./handlers/socketHandler.js";
 
@@ -38,6 +39,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/search/", searchRoutes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");

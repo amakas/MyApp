@@ -1,12 +1,9 @@
-@use "../styles/mixins";
-
 .settings-page {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: auto;
+  gap: 10px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
 
 .settings-title {

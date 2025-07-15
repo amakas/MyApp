@@ -1,63 +1,79 @@
 .post-form {
-  background-color: rgb(232, 235, 190);
-  width: 40%;
-  padding: 30px;
-  margin: 20px auto;
+  background-color: #fffdf3;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 30px 25px;
+  margin: 30px auto;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.post-form h2 {
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .div-title,
 .div-content {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 10px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-title,
+.label-content {
   font-weight: 600;
-  font-size: 1.2rem;
+  color: #444;
 }
 
-.div-content {
-  justify-content: left;
+.label-title {
+  font-size: 20px;
 }
-
-.title {
-  margin-left: 10px;
-  padding: 5px;
-  border-radius: 5px;
+.title,
+.content {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 15px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #f1c40f;
+    box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.3);
+  }
 }
 
 .content {
-  resize: none;
-  height: auto;
-  padding: 5px;
-  height: 50px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  width: 80%;
-  border: 1px solid #ccc;
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
 }
 
 .post-button {
-  align-self: center;
-  padding: 0.75rem 1.5rem;
-  background-color: #007bff;
-  color: white;
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: #fdd835;
+  color: #222;
+  font-weight: 600;
+  font-size: 15px;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
 
   &:hover {
-    filter: brightness(1.2);
+    background-color: #fbc02d;
   }
+
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
 }

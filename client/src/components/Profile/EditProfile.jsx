@@ -3,7 +3,7 @@ import "./EditProfile.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 export default function EditProfile() {
   const [formData, setFormData] = useState({
     username: "",
@@ -106,6 +106,12 @@ export default function EditProfile() {
       <form onSubmit={handleSubmit} className="edit-profile-form">
         <div className="edit-picture">
           <label htmlFor="profile-picture">Profile Picture:</label>
+          <img
+            src={`${BaseUrl}${existingProfilePicture}`}
+            className="picture"
+            width={100}
+            height={100}
+          ></img>
           <input
             type="file"
             id="profile-picture"

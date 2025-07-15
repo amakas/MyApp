@@ -22,7 +22,7 @@ export default function User({
   const navigate = useNavigate();
   const { id } = useParams();
   const userId = localStorage.getItem("userId");
-  const [userData, setUserData] = useState(id);
+
   const postLength = posts.length;
   const followers = followersArr.length;
   const following = followingArr.length;
