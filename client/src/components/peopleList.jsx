@@ -2,7 +2,7 @@ import "./peopleList.scss";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
-
+import { getSocket } from "../socket";
 export const ListOfPeople = ({
   people,
   isGlobal,
@@ -11,10 +11,44 @@ export const ListOfPeople = ({
   setIsGlobal,
   setFollowing,
 }) => {
+  const [tick, setTick] = useState(0);
   const navigate = useNavigate();
 
   const userId = localStorage.getItem("userId");
+  const socket = getSocket();
 
+  const formatLastSeen = (lastSeenDate) => {
+    const diffMs = Date.now() - new Date(lastSeenDate).getTime();
+    const diffSec = Math.floor(diffMs / 1000);
+
+    if (diffSec < 60) {
+      return `${diffSec} seconds ago`;
+    }
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) {
+      return `${diffMin} minutes ago`;
+    }
+    const diffHours = Math.floor(diffMin / 60);
+    return `${diffHours} hours ago`;
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTick((prev) => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+  useEffect(() => {
+    if (!socket) return;
+    socket.on("userStatus", ({ userId, isOnline }) => {
+      setPeople((prev) =>
+        prev.map((person) =>
+          person._id === userId ? { ...person, isOnline } : person
+        )
+      );
+    });
+  }, [socket]);
   return (
     <div className="people-list">
       {type === "people" && (
@@ -31,6 +65,11 @@ export const ListOfPeople = ({
           >
             Following
           </h2>
+        </div>
+      )}
+      {(!people || people.length === 0) && (
+        <div>
+          <em>No users found</em>
         </div>
       )}
 
@@ -102,22 +141,31 @@ export const ListOfPeople = ({
             console.error("Internal error", error);
           }
         };
+
         return (
           <div onClick={handleClick} className="people-item" key={person._id}>
             <img
               src={profilePictureUrl}
-              width="70"
-              height="70"
+              width="60"
+              height="60"
               alt="Avatar"
               className={pictureClass}
               title="Avatar"
             />
             <div className="person-details">
-              <p className="person-username">{person.username}</p>
-              <p className="person-name">
-                {person.firstname} {person.lastname}
-              </p>{" "}
-              <p className="person-bio">{person.bio}</p>
+              <div className="name-username">
+                <p className="person-username">{person.username}</p>
+                <p className="person-name">
+                  {person.firstname} {person.lastname}
+                </p>
+              </div>
+              {!person.isOnline ? (
+                <div className="online-offline">
+                  Offline 🔴 <p>Last seen: {formatLastSeen(person.lastSeen)}</p>
+                </div>
+              ) : (
+                <div className="online-offline">Online 🟢</div>
+              )}
             </div>
             <div>
               <button
@@ -135,6 +183,7 @@ export const ListOfPeople = ({
                 className="message-button"
                 onClick={(e) => {
                   e.stopPropagation();
+                  navigate(`/userChat/${person._id}`);
                 }}
               >
                 Message

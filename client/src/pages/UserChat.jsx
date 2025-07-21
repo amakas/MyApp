@@ -1,46 +1,42 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-
-import "./chat.scss";
-import { initSocket, getSocket } from "../socket";
+import { useEffect, useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Messages } from "../components/chat/messages";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { initSocket, getSocket } from "../socket";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
-
-function Chat() {
+export default function UserChat() {
+  const [user, setUser] = useState({});
+  const [me, setMe] = useState({});
+  const [people, setPeople] = useState([]);
+  const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [text, setText] = useState("");
-  const [page, setPage] = useState(0);
-  const myusername = localStorage.getItem("username");
-  const messagesEndRef = useRef(null);
-  const navigate = useNavigate();
-  const messagesRef = useRef(null);
-  const [loading, setLoading] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
-  const [people, setPeople] = useState([]);
-
+  const { personId } = useParams();
+  const [loading, setLoading] = useState(false);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
+  const messagesEndRef = useRef(null);
+  const myusername = localStorage.getItem("username");
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setText(e.target.value);
   };
-
   const handleClick = (e) => {
     e.preventDefault();
-    if (!text) return;
     if (socket) {
-      socket.emit("message", { content: text, username: myusername });
+      socket.emit("message", {
+        content: text,
+        username: myusername,
+        senderId: userId,
+        receiverId: personId,
+      });
     }
     setText("");
   };
 
   useEffect(() => {
-    const s = initSocket();
-    setSocket(s);
+    const s = getSocket();
 
     s.on("connect", () => {
       console.log("Connected to socket:", s.id);
@@ -70,11 +66,70 @@ function Chat() {
 
     return () => {
       s.off("message");
-      s.off("connect");
     };
   }, []);
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      if (!userId || !token) {
+        navigate("/");
+        return;
+      }
+      try {
+        const response = await fetch(`/api/messages/${personId}/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        const msgs = data.map((msg) => {
+          const { content, username, createdAt, updatedAt } = msg;
+          const sendTime = new Date(createdAt).toLocaleTimeString("uk-UA", {
+            hour12: false,
+          });
+          const isMine = username === myusername;
+          return { content, username, sendTime, updatedAt, isMine };
+        });
+        setMessages(msgs);
+      } catch (error) {
+        console.error("Error fetching messages", error);
+      }
+    };
+    fetchMessages();
+  }, [personId, userId]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`/api/users/${personId}`, {
+          headers: { Authorization: `Bearer: ${token}` },
+        });
+        if (response.ok) {
+          const user = await response.json();
+          setUser(user);
+        } else {
+          console.error("Server error", error);
+        }
+      } catch (error) {
+        console.error("Fail to fetch user");
+      }
+    };
+
+    const fetchMe = async () => {
+      try {
+        const response = await fetch(`/api/users/${userId}`, {
+          headers: { Authorization: `Bearer: ${token}` },
+        });
+        if (response.ok) {
+          const me = await response.json();
+          setMe(me);
+        } else {
+          console.error("Server error", error);
+        }
+      } catch (error) {
+        console.error("Fail to fetch user");
+      }
+    };
     const fetchUsers = async () => {
       try {
         const response = await fetch(`/api/users/messages/${userId}`, {
@@ -89,54 +144,24 @@ function Chat() {
       }
     };
     fetchUsers();
-  }, [userId, token]);
-
-  useEffect(() => {
-    setLoading(true);
-    const fetchMessages = async () => {
-      if (!userId || !token) {
-        navigate("/");
-        return;
-      }
-      try {
-        const response = await fetch(`/api/messages`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        const allMsgs = data.filter((el) => !el.receiverId);
-
-        const msgs = allMsgs.map((msg) => {
-          const { content, username, createdAt, updatedAt } = msg;
-          const sendTime = new Date(createdAt).toLocaleTimeString("uk-UA", {
-            hour12: false,
-          });
-          const isMine = username === myusername;
-          return { content, username, sendTime, updatedAt, isMine };
-        });
-        setMessages(msgs);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching messages", error);
-      }
-    };
-    fetchMessages();
-  }, [token]);
-
+    fetchUser();
+    fetchMe();
+  }, [userId, token, personId]);
   useEffect(() => {
     if (shouldScrollToBottom) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-
   return (
     <div className="chat-page">
-      <h1>Global chat</h1>
-      <div className="global-main-box">
-        <div className="global-people-box">
+      <div className="chat-header">
+        <h1>Chat</h1>
+        <h3>with {user.username}</h3>
+      </div>
+      <div className="main-box">
+        <div className="people-box">
+          <h2>Dialogs</h2>
           <div className="people-chats">
-            <h2>Dialogs</h2>
             {people.map((person) => {
               return (
                 <div
@@ -159,14 +184,16 @@ function Chat() {
           </div>
         </div>
         <div className="messages-box">
-          <div className="global-display">
+          <h2>Chat</h2>
+
+          <div className="display">
             <Messages messages={messages} />
             <div ref={messagesEndRef}></div>
           </div>
           <div className="message">
             <textarea
               rows={3}
-              className="global input-message"
+              className="input-message"
               name="text"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -186,4 +213,3 @@ function Chat() {
     </div>
   );
 }
-export default Chat;

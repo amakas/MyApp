@@ -1,7 +1,7 @@
 import express from "express";
 import User from "../models/user.js";
 import Post from "../models/Post.js";
-
+import Message from "../models/Message.js";
 export const getUser = async (req, res) => {
   const { id } = req.params;
   try {
@@ -161,6 +161,30 @@ export const getUserByPost = async (req, res) => {
     const post = await Post.findById(postId);
     const user = await User.findById(post.userId);
     res.status(200).json(user);
+  } catch (error) {
+    console.error("Server error", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getUserChats = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const receiverIds = await Message.find({
+      $or: [{ senderId: userId }, { receiverId: userId }],
+    }).distinct("receiverId");
+
+    const senderIds = await Message.find({
+      $or: [{ senderId: userId }, { receiverId: userId }],
+    }).distinct("senderId");
+
+    const userIds = Array.from(new Set([...receiverIds, ...senderIds])).filter(
+      (id) => id != userId
+    );
+
+    const users = await User.find({ _id: { $in: userIds } }, "-password");
+    res.status(200).json(users);
   } catch (error) {
     console.error("Server error", error);
     res.status(500).json({ message: "Internal server error" });

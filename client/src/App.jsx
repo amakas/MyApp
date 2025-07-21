@@ -19,12 +19,24 @@ import UserProfile from "./pages/UserProfile";
 import { FollowersList } from "./pages/Followers";
 import { FollowingList } from "./pages/Following";
 import { Comments } from "./pages/Comments";
-
+import UserChat from "./pages/UserChat";
+import { useEffect } from "react";
+import { initSocket, getSocket } from "./socket";
 function LayoutWrapper() {
   const location = useLocation();
 
   const hideLayoutOn = ["/login", "/register", "/terms", "/privacy"];
   const hideLayout = hideLayoutOn.includes(location.pathname);
+  useEffect(() => {
+    const s = initSocket();
+    s.on("connect", () => {
+      console.log("Connected:", s.id);
+    });
+
+    return () => {
+      s.disconnect();
+    };
+  }, []);
 
   return (
     <>
@@ -47,6 +59,7 @@ function LayoutWrapper() {
             <Route path="/followers/:id" element={<FollowersList />} />
             <Route path="/following/:id" element={<FollowingList />} />
             <Route path="/comments/:id/:postId" element={<Comments />} />
+            <Route path="/userChat/:personId" element={<UserChat />} />
           </Route>
           <Route path="*" element={<h1>Page Not Found</h1>} />
         </Routes>

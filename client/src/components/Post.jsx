@@ -48,13 +48,22 @@ export default function Post({
       async ([entry]) => {
         if (entry.isIntersecting && !seenPosts.current.has(post._id)) {
           seenPosts.current.add(post._id);
+
           try {
-            await fetch(`/api/posts/view/${post._id}`, {
+            const res = await fetch(`/api/posts/view/${post._id}`, {
               method: "PUT",
               headers: { Authorization: `Bearer ${token}` },
             });
+
+            const updatedPost = await res.json();
+            setPosts((prev) =>
+              prev.map((p) =>
+                p._id === post._id ? { ...p, views: updatedPost.views } : p
+              )
+            );
           } catch (err) {
             console.error("View count error:", err);
+            seenPosts.current.delete(post._id);
           }
         }
       },
@@ -242,7 +251,7 @@ export default function Post({
           )}
         </div>
       )}
-      <div className="stats">
+      <div className="stats" ref={postRef}>
         <button
           onClick={handleLike}
           className={post.likes?.includes(userId) ? "liked" : "notLiked"}

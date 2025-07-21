@@ -1,14 +1,22 @@
-import Message from '../models/Message.js'
-import { handleSocketMessage } from './socketMessage.js';
+import Message from "../models/Message.js";
+import { handleSocketMessage } from "./socketMessage.js";
+import User from "../models/user.js";
 
 export const handleSocketConnection = (io) => {
-io.on('connection', (socket) => {
-  console.log('🟢 New client connected:', socket.id);
+  io.on("connection", async (socket) => {
+    handleSocketMessage(socket, io);
+    const token = socket.handshake.auth.token;
+    const userId = socket.handshake.auth.userId;
 
-  handleSocketMessage(socket, io)
+    await User.findByIdAndUpdate(userId, { isOnline: true });
 
-  socket.on('disconnect', () => {
-    console.log('🔴 Client disconnected:', socket.id);
+    io.emit("userStatus", { userId, isOnline: true });
+    socket.on("disconnect", async () => {
+      await User.findByIdAndUpdate(userId, {
+        isOnline: false,
+        lastSeen: new Date(),
+      });
+      io.emit("userStatus", { userId, isOnline: false });
+    });
   });
-});
-}
+};

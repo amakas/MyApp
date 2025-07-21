@@ -1,10 +1,10 @@
 .post-list {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 5px auto;
   padding: 0 20px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 5px;
   font-family: "Segoe UI", sans-serif;
 }
 
@@ -27,7 +27,7 @@
 
 .post-item p {
   font-size: 15px;
-  color: black;
+
   line-height: 1.5;
   word-break: break-word;
 }
@@ -142,7 +142,7 @@ button {
 
 .timestamp {
   font-size: 12px;
-  color: #999;
+  color: #f2eded;
 }
 
 .post-title {

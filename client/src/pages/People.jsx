@@ -1,7 +1,7 @@
 import { ListOfPeople } from "../components/peopleList.jsx";
 import { useState, useEffect } from "react";
 import "./People.scss";
-
+import { getSocket } from "../socket.js";
 export const People = () => {
   const [people, setPeople] = useState([]);
   const [following, setFollowing] = useState([]);

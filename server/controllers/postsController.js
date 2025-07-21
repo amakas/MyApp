@@ -193,7 +193,7 @@ export const getPost = async (req, res) => {
 
 export const getViews = async (req, res) => {
   const postId = req.params.postId;
-  const userId = req.user.id;
+  const userId = req.userId;
 
   try {
     const post = await Post.findById(postId);
@@ -204,7 +204,7 @@ export const getViews = async (req, res) => {
       await post.save();
     }
 
-    res.sendStatus(200);
+    res.status(200).json(post);
   } catch (err) {
     console.error("View error", err);
     res.status(500).send("Internal error");

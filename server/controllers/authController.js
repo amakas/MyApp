@@ -69,19 +69,16 @@ export const login = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        token,
-        userId: user._id,
-        username: user.username,
-        redirectTo: `/profile/${user._id}`,
-      });
-    console.log("User logged in successfully:", user);
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      userId: user._id,
+      username: user.username,
+      redirectTo: `/profile/${user._id}`,
+    });
   } catch (error) {
     console.error("Registration error:", error);
-    // Повертайте JSON навіть для помилок
+
     return res.status(500).json({
       success: false,
       message: "Internal server error",

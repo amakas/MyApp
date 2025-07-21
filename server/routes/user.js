@@ -8,6 +8,7 @@ import {
   followers,
   followings,
   getUserByPost,
+  getUserChats,
 } from "../controllers/userController.js";
 import { verifyToken } from "../middleware/auth.js";
 import upload from "../middleware/upload.js";
@@ -22,4 +23,5 @@ router.get("/followers/:id", verifyToken, followers);
 router.get("/followings/:id", verifyToken, followings);
 router.put("/follow/:id", verifyToken, follow);
 router.get("/post/:postId", verifyToken, getUserByPost);
+router.get("/messages/:userId", verifyToken, getUserChats);
 export default router;

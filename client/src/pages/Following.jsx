@@ -29,7 +29,11 @@ export const FollowingList = () => {
   return (
     <div className="following-page">
       <h1>Following</h1>
-      <ListOfPeople people={followings} type="followings" />
+      <ListOfPeople
+        people={followings}
+        type="followings"
+        setPeople={setFollowings}
+      />
     </div>
   );
 };

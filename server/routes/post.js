@@ -26,7 +26,7 @@ router.put("/like/:userId/:postId", verifyToken, like);
 router.put("/share/:postId", verifyToken, share);
 router.post("/report/:postId", verifyToken, report);
 router.get("/post/:postId", verifyToken, getPost);
-router.get("/view/:postId", verifyToken, getViews);
+router.put("/view/:postId", verifyToken, getViews);
 router.get("/followings/:userId", verifyToken, getFollowingsPosts);
 router.delete("/deleteAll/:userId", verifyToken, deletepostsByUser);
 export default router;
