@@ -1,7 +1,10 @@
 import express from "express";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import Post from "../models/Post.js";
 import Message from "../models/Message.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 export const getUser = async (req, res) => {
   const { id } = req.params;
   try {
@@ -18,7 +21,7 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { id } = req.params;
+  const id = req.userId;
   const {
     firstname,
     lastname,
@@ -62,7 +65,7 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  const id = req.userId;
 
   try {
     const user = await User.findById(id);
@@ -78,7 +81,7 @@ export const deleteUser = async (req, res) => {
 };
 
 export const getAllUsers = async (req, res) => {
-  const { id } = req.params;
+  const id = req.userId;
 
   try {
     const users = await User.find({ _id: { $ne: id } }, "-password");
@@ -168,7 +171,7 @@ export const getUserByPost = async (req, res) => {
 };
 
 export const getUserChats = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.userId;
 
   try {
     const receiverIds = await Message.find({
@@ -188,5 +191,17 @@ export const getUserChats = async (req, res) => {
   } catch (error) {
     console.error("Server error", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };

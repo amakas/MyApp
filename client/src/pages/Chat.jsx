@@ -23,7 +23,6 @@ function Chat() {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [people, setPeople] = useState([]);
 
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const handleChange = (e) => {
     setText(e.target.value);
@@ -39,12 +38,12 @@ function Chat() {
   };
 
   useEffect(() => {
-    const s = initSocket();
+    let s = getSocket();
+    if (!s) {
+      s = initSocket(token);
+    }
     setSocket(s);
 
-    s.on("connect", () => {
-      console.log("Connected to socket:", s.id);
-    });
     s.on("message", (data) => {
       const { content, username, createdAt, updatedAt } = data;
       let hours = new Date(createdAt).getHours();
@@ -70,14 +69,13 @@ function Chat() {
 
     return () => {
       s.off("message");
-      s.off("connect");
     };
   }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`/api/users/messages/${userId}`, {
+        const response = await fetch(`/api/users/messages/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
@@ -89,12 +87,12 @@ function Chat() {
       }
     };
     fetchUsers();
-  }, [userId, token]);
+  }, [token]);
 
   useEffect(() => {
     setLoading(true);
     const fetchMessages = async () => {
-      if (!userId || !token) {
+      if (!token) {
         navigate("/");
         return;
       }
@@ -147,9 +145,14 @@ function Chat() {
                   <img
                     src={
                       person.profilePicture
-                        ? `${BaseUrl}${person.profilePicture}`
+                        ? person.profilePicture.startsWith("http")
+                          ? person.profilePicture
+                          : `${BaseUrl}${person.profilePicture}`
                         : `https://ui-avatars.com/api/?name=${person.username}`
                     }
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${person.username}`;
+                    }}
                     alt="avatar"
                   />
                   <p>{person.username}</p>

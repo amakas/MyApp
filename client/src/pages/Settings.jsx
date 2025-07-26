@@ -13,7 +13,7 @@ function Settings() {
     const confirmed = window.confirm("Are you sure? this is irreversible");
     if (confirmed) {
       try {
-        const response = await fetch(`/api/users/${userId}`, {
+        const response = await fetch(`/api/users/`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -22,9 +22,9 @@ function Settings() {
         if (response.ok) {
           alert("Account successfully deleted");
           localStorage.clear();
-          navigate("/", { replace: true });
+          navigate("/login", { replace: true });
         } else {
-          alert("Fail to delete account");
+          alert("Failed to delete account");
         }
       } catch (error) {
         console.error("Error deleting account:", error);

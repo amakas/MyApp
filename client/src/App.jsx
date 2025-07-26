@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -24,19 +30,59 @@ import { useEffect } from "react";
 import { initSocket, getSocket } from "./socket";
 function LayoutWrapper() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [loadingUser, setLoadingUser] = React.useState(true); // ✅ стан завантаження
 
   const hideLayoutOn = ["/login", "/register", "/terms", "/privacy"];
   const hideLayout = hideLayoutOn.includes(location.pathname);
-  useEffect(() => {
-    const s = initSocket();
-    s.on("connect", () => {
-      console.log("Connected:", s.id);
-    });
 
-    return () => {
-      s.disconnect();
-    };
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get("token");
+    const token = tokenFromUrl || localStorage.getItem("token");
+
+    if (tokenFromUrl) {
+      localStorage.clear();
+      localStorage.setItem("token", tokenFromUrl);
+      window.history.replaceState(null, "", "/");
+      navigate("/");
+    }
+
+    if (!token) {
+      setLoadingUser(false); // ✅ неавторизований
+      return;
+    }
+
+    console.log("Using token:", token);
+
+    fetch("/api/users/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Invalid token");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Fetched user:", data);
+        localStorage.setItem("userId", data._id);
+        localStorage.setItem("username", data.username);
+
+        const s = initSocket(token);
+        s.on("connect", () => {
+          console.log("Socket connected:", s.id);
+        });
+      })
+      .catch((err) => {
+        console.error("Auth error:", err);
+      })
+      .finally(() => {
+        setLoadingUser(false);
+      });
   }, []);
+
+  if (loadingUser) {
+    return <div>Loading user...</div>;
+  }
 
   return (
     <>
@@ -49,12 +95,12 @@ function LayoutWrapper() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/edit-profile/:id" element={<EditProfile />} />
-            <Route path="/home/:id" element={<Home />} />
-            <Route path="/chat/:id" element={<Chat />} />
-            <Route path="/settings/:id" element={<Settings />} />
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/people/:id" element={<People />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/people" element={<People />} />
             <Route path="/userProfile/:id" element={<UserProfile />} />
             <Route path="/followers/:id" element={<FollowersList />} />
             <Route path="/following/:id" element={<FollowingList />} />

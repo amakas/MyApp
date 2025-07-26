@@ -26,7 +26,7 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`/api/users/${userId}`, {
+        const response = await fetch(`/api/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -79,7 +79,7 @@ export default function EditProfile() {
       dataToSend.append("profilePicture", profilePictureFile);
     }
     try {
-      const response = await fetch(`/api/users/${userId}`, {
+      const response = await fetch(`/api/users`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ export default function EditProfile() {
       if (response.ok) {
         alert("Profile updated successfully!");
         localStorage.setItem("username", data.username);
-        navigate(`/profile/${userId}`);
+        navigate(`/profile`);
       } else {
         alert(data.message || "Failed to update profile");
       }
@@ -107,7 +107,11 @@ export default function EditProfile() {
         <div className="edit-picture">
           <label htmlFor="profile-picture">Profile Picture:</label>
           <img
-            src={`${BaseUrl}${existingProfilePicture}`}
+            src={
+              existingProfilePicture.startsWith("http")
+                ? existingProfilePicture
+                : `${BaseUrl}${existingProfilePicture}`
+            }
             className="picture"
             width={100}
             height={100}

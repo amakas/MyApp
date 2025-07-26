@@ -1,9 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+dotenv.config();
 import path from "path";
 import { fileURLToPath } from "url";
-
+import session from "express-session";
+import "./handlers/passportHandler.js";
+import passport from "passport";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
@@ -14,10 +17,8 @@ import postRoutes from "./routes/post.js";
 import messageRoutes from "./routes/message.js";
 import commentRoutes from "./routes/comment.js";
 import searchRoutes from "./routes/search.js";
-
+import googleAuthRoutes from "./routes/passport.js";
 import { handleSocketConnection } from "./handlers/socketHandler.js";
-
-dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -32,7 +33,16 @@ handleSocketConnection(io);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
@@ -41,6 +51,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/search/", searchRoutes);
+app.use("/api/auth", googleAuthRoutes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");

@@ -13,7 +13,7 @@ export const ListOfPeople = ({
 }) => {
   const [tick, setTick] = useState(0);
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   const socket = getSocket();
 
@@ -78,7 +78,9 @@ export const ListOfPeople = ({
         const isFollowing = person.followers.includes(userId);
 
         const profilePictureUrl = person.profilePicture
-          ? `${BaseUrl}${person.profilePicture}`
+          ? person.profilePicture.startsWith("http")
+            ? person.profilePicture
+            : `${BaseUrl}${person.profilePicture}`
           : `https://ui-avatars.com/api/?name=${person.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
         const pictureClass = person.profilePicture
           ? "picture"

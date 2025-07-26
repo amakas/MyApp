@@ -16,7 +16,9 @@ function UserProfile() {
   const token = localStorage.getItem("token");
   const { id } = useParams();
   const profilePictureUrl = userData.profilePicture
-    ? `${BaseUrl}${userData.profilePicture}`
+    ? userData.profilePicture.startsWith("http")
+      ? userData.profilePicture
+      : `${BaseUrl}${userData.profilePicture}`
     : `https://ui-avatars.com/api/?name=${userData.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
   useEffect(() => {

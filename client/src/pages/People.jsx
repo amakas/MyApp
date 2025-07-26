@@ -12,9 +12,8 @@ export const People = () => {
 
   useEffect(() => {
     const fetchPeople = async () => {
-      const id = userId;
       try {
-        const res = await fetch(`/api/users/all/${id}`, {
+        const res = await fetch(`/api/users/all`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -17,7 +17,7 @@ const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
 export default function Post({
   post,
-  canEdit = false,
+
   onDelete,
   onEdit,
   onSave,
@@ -26,6 +26,7 @@ export default function Post({
   editedContent,
   setEditedContent,
   setPosts,
+  isEditable = false,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
@@ -190,7 +191,9 @@ export default function Post({
     getProfilePicture();
   }, [postId]);
   const profilePictureUrl = profilePicture
-    ? `${BaseUrl}${profilePicture}`
+    ? profilePicture.startsWith("http")
+      ? profilePicture
+      : `${BaseUrl}${profilePicture}`
     : `https://ui-avatars.com/api/?name=${post.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = profilePicture ? "picture" : "defaultPicture";
 
@@ -236,7 +239,7 @@ export default function Post({
         </>
       ) : (
         <div>
-          {canEdit && (
+          {isEditable && (
             <>
               <button
                 className="delete-button"

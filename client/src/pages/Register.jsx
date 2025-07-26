@@ -31,7 +31,7 @@ function Register() {
       console.log(data);
       if (response.ok) {
         alert(data.message || "Registration successful!");
-        // Optionally redirect to login page or home page
+
         window.location.href = "/login";
       } else {
         alert(data.message || "Registration failed");

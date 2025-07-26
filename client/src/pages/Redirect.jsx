@@ -9,7 +9,7 @@ function EntryRedirect() {
     const userId = localStorage.getItem("userId");
 
     if (!isTokenExpired(token)) {
-      navigate(`/home/${userId}`);
+      navigate(`/home`);
     } else {
       navigate("/login");
     }

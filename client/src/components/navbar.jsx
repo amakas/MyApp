@@ -16,7 +16,6 @@ function Navbar() {
   const navigate = useNavigate();
   const searchRef = useRef(null);
   const token = localStorage.getItem("token");
-  const id = localStorage.getItem("userId");
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -63,7 +62,7 @@ function Navbar() {
   };
 
   const handleGoToPost = (postId) => {
-    navigate(`/comments/${id}/${postId}`);
+    navigate(`/comments/${postId}`);
     setShowDropdown(false);
     setSearchQuery("");
   };
@@ -73,19 +72,19 @@ function Navbar() {
       <nav className="navbar">
         <ol className="pages-list">
           <li>
-            <Link to={`/home/${id}`}>Home</Link>
+            <Link to={`/home`}>Home</Link>
           </li>
           <li>
-            <Link to={`/chat/${id}`}>Chat</Link>
+            <Link to={`/chat`}>Chat</Link>
           </li>
           <li>
-            <Link to={`/settings/${id}`}>Settings</Link>
+            <Link to={`/settings`}>Settings</Link>
           </li>
           <li>
-            <Link to={`/profile/${id}`}>Profile</Link>
+            <Link to={`/profile`}>Profile</Link>
           </li>
           <li>
-            <Link to={`/people/${id}`}>People</Link>
+            <Link to={`/people`}>People</Link>
           </li>
         </ol>
 

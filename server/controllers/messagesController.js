@@ -20,8 +20,8 @@ export const getMessages = async (req, res) => {
 };
 
 export const getUserMessages = async (req, res) => {
-  const { personId, userId } = req.params;
-
+  const { personId } = req.params;
+  const userId = req.userId;
   try {
     const messages = await Message.find({
       $or: [

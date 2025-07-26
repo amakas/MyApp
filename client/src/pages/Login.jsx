@@ -34,7 +34,7 @@ function Login() {
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("username", data.username);
 
-        navigate(`/profile/${data.userId}`);
+        navigate(`/profile`);
       } else {
         console.error("Login failed:", data.message);
       }
@@ -75,6 +75,13 @@ function Login() {
       <p className="register-text">
         Don't have an account? <a href="/register">Register here</a>
       </p>
+      <button
+        onClick={() => {
+          window.location.href = "http://localhost:5000/api/auth/google";
+        }}
+      >
+        Sign in with Google
+      </button>
     </div>
   );
 }

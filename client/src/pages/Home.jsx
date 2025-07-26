@@ -13,18 +13,16 @@ function Home() {
   const [followingPosts, setFollowingPosts] = useState([]);
   const [isGlobal, setIsGlobal] = useState(true);
   const navigate = useNavigate();
-  const { id } = useParams();
+
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
   useEffect(() => {
+    if (!token || !userId) return;
     const fetchPosts = async () => {
       setIsLoading(true);
-      if (!token) {
-        navigate("/");
-        return;
-      }
+
       try {
-        const response = await fetch(`/api/posts/${userId}`, {
+        const response = await fetch(`/api/posts`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +41,7 @@ function Home() {
     };
     const fetchFollowingPosts = async () => {
       try {
-        const response = await fetch(`/api/posts/followings/${userId}`, {
+        const response = await fetch(`/api/posts/followings`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
@@ -56,8 +54,8 @@ function Home() {
       }
     };
 
-    if (id) isGlobal ? fetchPosts() : fetchFollowingPosts();
-  }, [id, isGlobal]);
+    isGlobal ? fetchPosts() : fetchFollowingPosts();
+  }, [isGlobal, token]);
   if (isLoading) return <Loader />;
   return (
     <div className="home-page">

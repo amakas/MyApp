@@ -1,5 +1,5 @@
 import Post from "../models/Post.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 export const createPost = async (req, res) => {
   const { title, content, username } = req.body;
   try {
@@ -28,6 +28,25 @@ export const createPost = async (req, res) => {
   }
 };
 
+export const getMyPosts = async (req, res) => {
+  const userId = req.userId;
+  try {
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const posts = await Post.find({ userId }).sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error fetching my posts:", error);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
 export const getPostsByUser = async (req, res) => {
   const { userId } = req.params;
   try {
@@ -48,7 +67,7 @@ export const getPostsByUser = async (req, res) => {
 };
 
 export const getPosts = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.userId;
   try {
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
@@ -212,7 +231,7 @@ export const getViews = async (req, res) => {
 };
 
 export const getFollowingsPosts = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.userId;
   try {
     const user = await User.findById(userId);
     const followings = user.following;
@@ -220,18 +239,18 @@ export const getFollowingsPosts = async (req, res) => {
 
     res.status(200).json(followingPosts);
   } catch (error) {
-    console.error("fetching error", err);
+    console.error("fetching error", error);
     res.status(500).send("Internal error");
   }
 };
 
 export const deletepostsByUser = async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.userId;
   try {
     await Post.deleteMany({ userId });
     res.status(200).json({ message: "deleted successfuly" });
   } catch (error) {
-    console.error(" error deleting posts", err);
+    console.error(" error deleting posts", error);
     res.status(500).send("Internal error");
   }
 };

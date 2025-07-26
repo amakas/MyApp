@@ -2,11 +2,10 @@ import { io } from "socket.io-client";
 
 let socket;
 
-export const initSocket = () => {
+export const initSocket = (token) => {
   socket = io("http://localhost:5000", {
     auth: {
-      token: localStorage.getItem("token"),
-      userId: localStorage.getItem("userId"),
+      token: token,
     },
   });
   return socket;

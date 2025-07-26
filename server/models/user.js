@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+
     minlength: 6,
   },
   email: {
@@ -84,6 +84,7 @@ const userSchema = new mongoose.Schema({
   likes: { type: Array, default: [] },
   isOnline: { type: Boolean, default: false },
   lastSeen: { type: Date },
+  googleId: { type: String },
 });
 
 const User = mongoose.model("User", userSchema);

@@ -20,17 +20,18 @@ export default function User({
   pictureClass,
 }) {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const userId = localStorage.getItem("userId");
+
+  let { userId } = useParams();
+  if (!userId) userId = localStorage.getItem("userId");
 
   const postLength = posts.length;
   const followers = followersArr.length;
   const following = followingArr.length;
   const handleFollowers = () => {
-    navigate(`/followers/${id}`);
+    navigate(`/followers/${userId}`);
   };
   const handleFollowing = () => {
-    navigate(`/following/${id}`);
+    navigate(`/following/${userId}`);
   };
   return (
     <section className="user-profile">
@@ -38,6 +39,9 @@ export default function User({
       <div className="profile-header">
         <img
           src={profilePicture}
+          onError={(e) => {
+            e.target.src = `https://ui-avatars.com/api/?name=${userData.username}`;
+          }}
           width="130"
           height="130"
           alt="ProfilePicture"

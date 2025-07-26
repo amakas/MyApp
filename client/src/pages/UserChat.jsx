@@ -36,11 +36,12 @@ export default function UserChat() {
   };
 
   useEffect(() => {
-    const s = getSocket();
+    let s = getSocket();
+    if (!s) {
+      s = initSocket(token);
+    }
+    setSocket(s);
 
-    s.on("connect", () => {
-      console.log("Connected to socket:", s.id);
-    });
     s.on("message", (data) => {
       const { content, username, createdAt, updatedAt } = data;
       let hours = new Date(createdAt).getHours();
@@ -76,7 +77,7 @@ export default function UserChat() {
         return;
       }
       try {
-        const response = await fetch(`/api/messages/${personId}/${userId}`, {
+        const response = await fetch(`/api/messages/${personId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -96,13 +97,13 @@ export default function UserChat() {
       }
     };
     fetchMessages();
-  }, [personId, userId]);
+  }, [personId, userId, token]);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch(`/api/users/${personId}`, {
-          headers: { Authorization: `Bearer: ${token}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
           const user = await response.json();
@@ -117,22 +118,22 @@ export default function UserChat() {
 
     const fetchMe = async () => {
       try {
-        const response = await fetch(`/api/users/${userId}`, {
-          headers: { Authorization: `Bearer: ${token}` },
+        const response = await fetch(`/api/users/me`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
           const me = await response.json();
           setMe(me);
         } else {
-          console.error("Server error", error);
+          console.error("Server error");
         }
       } catch (error) {
-        console.error("Fail to fetch user");
+        console.error("Fail to fetch user", error);
       }
     };
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`/api/users/messages/${userId}`, {
+        const response = await fetch(`/api/users/messages`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
@@ -172,9 +173,14 @@ export default function UserChat() {
                   <img
                     src={
                       person.profilePicture
-                        ? `${BaseUrl}${person.profilePicture}`
+                        ? person.profilePicture.startsWith("http")
+                          ? person.profilePicture
+                          : `${BaseUrl}${person.profilePicture}`
                         : `https://ui-avatars.com/api/?name=${person.username}`
                     }
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${person.username}`;
+                    }}
                     alt="avatar"
                   />
                   <p>{person.username}</p>

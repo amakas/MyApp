@@ -4,7 +4,12 @@ import "./PostList.scss";
 
 import Post from "../Post";
 
-export default function PostList({ posts, setPosts }) {
+export default function PostList({
+  posts,
+  setPosts,
+  isEditable,
+  isDelitable = false,
+}) {
   const userId = localStorage.getItem("userId");
   if (!posts || posts.length === 0) {
     return <div className="post-list">No posts available.</div>;
@@ -69,7 +74,7 @@ export default function PostList({ posts, setPosts }) {
   const handleDeleteAll = async () => {
     confirm("Are you sure, you want to delete all your posts?");
     try {
-      const response = await fetch(`/api/posts/deleteAll/${userId}`, {
+      const response = await fetch(`/api/posts/deleteAll`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -91,7 +96,6 @@ export default function PostList({ posts, setPosts }) {
           <Post
             key={key}
             post={post}
-            canEdit={id === userId}
             onDelete={handleDelete}
             onEdit={handleEditClick}
             onSave={handleSave}
@@ -100,12 +104,13 @@ export default function PostList({ posts, setPosts }) {
             editedContent={editedContent}
             setEditedContent={setEditedContent}
             setPosts={setPosts}
+            isEditable={isEditable}
           />
         );
       })}
       <>
         {" "}
-        {id === userId ? (
+        {isDelitable ? (
           <button onClick={handleDeleteAll} className="delete-all">
             Delete all posts
           </button>

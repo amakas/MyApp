@@ -16,9 +16,12 @@ function Profile() {
   const navigate = useNavigate();
 
   const profilePictureUrl = userData.profilePicture
-    ? `${BaseUrl}${userData.profilePicture}`
+    ? userData.profilePicture.startsWith("http")
+      ? userData.profilePicture
+      : `${BaseUrl}${userData.profilePicture}`
     : `https://ui-avatars.com/api/?name=${userData.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
+  console.log("profilePicture", userData.profilePicture);
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
@@ -29,7 +32,7 @@ function Profile() {
         return;
       }
 
-      const response = await fetch(`/api/users/${id}`, {
+      const response = await fetch(`/api/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,13 +48,13 @@ function Profile() {
     };
     const fetchPosts = async () => {
       const token = localStorage.getItem("token");
-      const id = localStorage.getItem("userId");
+
       if (!token) {
         navigate("/");
         return;
       }
       try {
-        const response = await fetch(`/api/posts/user/${id}`, {
+        const response = await fetch(`/api/posts/myposts`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,9 +71,9 @@ function Profile() {
       }
     };
 
-    if (id) fetchUserData();
-    if (id) fetchPosts();
-  }, [id]);
+    fetchUserData();
+    fetchPosts();
+  }, []);
 
   return (
     <div className="profile-page">
@@ -90,7 +93,12 @@ function Profile() {
         pictureClass={pictureClass}
       />
       <PostForm posts={posts} setPosts={setPosts} />
-      <PostList posts={posts} setPosts={setPosts} />
+      <PostList
+        posts={posts}
+        setPosts={setPosts}
+        isDelitable={true}
+        isEditable={true}
+      />
     </div>
   );
 }

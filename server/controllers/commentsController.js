@@ -1,6 +1,6 @@
 import Comment from "../models/Comments.js";
 import Post from "../models/Post.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 export const getComments = async (req, res) => {
   const { postId } = req.params;
 
