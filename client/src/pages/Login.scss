@@ -1,6 +1,6 @@
 .login-page {
   max-width: 400px;
-  margin: 60px auto;
+  margin: 40px auto;
   padding: 30px;
   background-color: #fdfdfd;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -88,4 +88,30 @@
       }
     }
   }
+}
+
+.google {
+  margin: 10px auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #e9e5e5;
+  color: #5f6368;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  &:hover {
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3),
+      0 4px 8px rgba(60, 64, 67, 0.15);
+    background-color: #f7f8f8;
+  }
+}
+.google-icon {
+  width: 18px;
+  height: 18px;
 }

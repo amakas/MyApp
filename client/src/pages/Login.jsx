@@ -36,6 +36,7 @@ function Login() {
 
         navigate(`/profile`);
       } else {
+        alert(data.message);
         console.error("Login failed:", data.message);
       }
     } catch (error) {
@@ -76,10 +77,16 @@ function Login() {
         Don't have an account? <a href="/register">Register here</a>
       </p>
       <button
+        className="google"
         onClick={() => {
           window.location.href = "http://localhost:5000/api/auth/google";
         }}
       >
+        <img
+          className="google-icon"
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="Google logo"
+        />
         Sign in with Google
       </button>
     </div>

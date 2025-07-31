@@ -53,21 +53,24 @@ export default function PostList({
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
-    try {
-      const response = await fetch(`/api/posts/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        setPosts((prev) => [...prev.filter((post) => post._id !== id)]);
-        alert("Post deleted");
-      } else {
-        alert("Fail to delete post");
+    const confirmed = window.confirm("Are you sure? this is irreversible");
+    if (confirmed) {
+      try {
+        const response = await fetch(`/api/posts/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          setPosts((prev) => [...prev.filter((post) => post._id !== id)]);
+          alert("Post deleted");
+        } else {
+          alert("Fail to delete post");
+        }
+      } catch (error) {
+        console.error("Error deleting", error);
       }
-    } catch (error) {
-      console.error("Error deleting", error);
     }
   };
 

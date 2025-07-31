@@ -9,7 +9,7 @@ function Settings() {
   const navigate = useNavigate();
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+
     const confirmed = window.confirm("Are you sure? this is irreversible");
     if (confirmed) {
       try {

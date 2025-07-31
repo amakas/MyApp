@@ -199,14 +199,20 @@ export default function Post({
 
   const handleGoToUser = () => {
     const postUserId = post.userId;
-    console.log(postUserId);
+    if (postUserId === userId) {
+      return;
+    }
     navigate(`/userProfile/${postUserId}`);
   };
   return (
     <div className="post-item">
       <div className="post-header">
         <div className="user-info">
-          <div onClick={handleGoToUser} className="usernameandphoto">
+          <div
+            style={post.userId === userId ? { cursor: "auto" } : undefined}
+            onClick={handleGoToUser}
+            className="usernameandphoto"
+          >
             <img
               src={profilePictureUrl}
               className={pictureClass}

@@ -1,5 +1,5 @@
-@mixin border{
-    border-radius: 15px;
+@mixin border {
+  border-radius: 15px;
 }
 
 @keyframes fadeInUp {
@@ -16,7 +16,7 @@
 .my-message,
 .someone-message {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: flex-start;
   margin: 5px;
   padding: 5px;
@@ -24,9 +24,8 @@
 }
 
 .my-message {
-  align-items: flex-end; 
+  align-items: flex-end;
 }
-
 
 .message-details {
   display: flex;
@@ -34,8 +33,8 @@
   font-size: x-small;
   color: gray;
   margin-bottom: 3px;
-  margin-left:5px;
-  margin-right:5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .message-content {

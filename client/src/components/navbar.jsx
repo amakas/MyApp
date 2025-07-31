@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./navbar.scss";
-import LoginButton from "./buttons/loginButton";
+import LogoutButton from "./buttons/logoutButton";
 import RegisterButton from "./buttons/registerButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -13,9 +13,11 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState({ users: [], posts: [] });
   const [showDropdown, setShowDropdown] = useState(false);
+
   const navigate = useNavigate();
   const searchRef = useRef(null);
   const token = localStorage.getItem("token");
+  const location = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -71,19 +73,19 @@ function Navbar() {
     <div>
       <nav className="navbar">
         <ol className="pages-list">
-          <li>
+          <li className={location.pathname === "/home" ? "active" : ""}>
             <Link to={`/home`}>Home</Link>
           </li>
-          <li>
+          <li className={location.pathname === "/chat" ? "active" : ""}>
             <Link to={`/chat`}>Chat</Link>
           </li>
-          <li>
+          <li className={location.pathname === "/settings" ? "active" : ""}>
             <Link to={`/settings`}>Settings</Link>
           </li>
-          <li>
+          <li className={location.pathname === "/profile" ? "active" : ""}>
             <Link to={`/profile`}>Profile</Link>
           </li>
-          <li>
+          <li className={location.pathname === "/people" ? "active" : ""}>
             <Link to={`/people`}>People</Link>
           </li>
         </ol>
@@ -151,10 +153,7 @@ function Navbar() {
 
         <ol className="buttons-list">
           <li>
-            <RegisterButton />
-          </li>
-          <li>
-            <LoginButton />
+            <LogoutButton />
           </li>
         </ol>
       </nav>

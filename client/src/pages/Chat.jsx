@@ -136,6 +136,11 @@ function Chat() {
           <div className="people-chats">
             <h2>Dialogs</h2>
             {people.map((person) => {
+              const profilePicture = person.profilePicture
+                ? person.profilePicture.startsWith("http")
+                  ? person.profilePicture
+                  : `${BaseUrl}${person.profilePicture}`
+                : `https://ui-avatars.com/api/?name=${person.username}`;
               return (
                 <div
                   onClick={() => navigate(`/userChat/${person._id}`)}
@@ -143,13 +148,7 @@ function Chat() {
                   className="chat-people-item"
                 >
                   <img
-                    src={
-                      person.profilePicture
-                        ? person.profilePicture.startsWith("http")
-                          ? person.profilePicture
-                          : `${BaseUrl}${person.profilePicture}`
-                        : `https://ui-avatars.com/api/?name=${person.username}`
-                    }
+                    src={profilePicture}
                     onError={(e) => {
                       e.target.src = `https://ui-avatars.com/api/?name=${person.username}`;
                     }}
@@ -163,8 +162,9 @@ function Chat() {
         </div>
         <div className="messages-box">
           <div className="global-display">
-            <Messages messages={messages} />
-            <div ref={messagesEndRef}></div>
+            <div className="messages-scroll">
+              <Messages messages={messages} messagesEndRef={messagesEndRef} />
+            </div>
           </div>
           <div className="message">
             <textarea

@@ -7,6 +7,7 @@ import PostForm from "../components/Profile/PostForm";
 import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
+import { initSocket } from "../socket";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 function Profile() {
   const [userData, setUserData] = useState({});
@@ -21,7 +22,13 @@ function Profile() {
       : `${BaseUrl}${userData.profilePicture}`
     : `https://ui-avatars.com/api/?name=${userData.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
-  console.log("profilePicture", userData.profilePicture);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      initSocket(token);
+    }
+  }, []);
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
