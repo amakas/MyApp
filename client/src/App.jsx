@@ -26,12 +26,12 @@ import { FollowersList } from "./pages/Followers";
 import { FollowingList } from "./pages/Following";
 import { Comments } from "./pages/Comments";
 import UserChat from "./pages/UserChat";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initSocket, getSocket } from "./socket";
 function LayoutWrapper() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [loadingUser, setLoadingUser] = React.useState(true); // ✅ стан завантаження
+  const [loadingUser, setLoadingUser] = React.useState(true);
 
   const hideLayoutOn = ["/login", "/register", "/terms", "/privacy"];
   const hideLayout = hideLayoutOn.includes(location.pathname);
@@ -49,7 +49,7 @@ function LayoutWrapper() {
     }
 
     if (!token) {
-      setLoadingUser(false); // ✅ неавторизований
+      setLoadingUser(false);
       return;
     }
 
@@ -104,7 +104,7 @@ function LayoutWrapper() {
             <Route path="/userProfile/:id" element={<UserProfile />} />
             <Route path="/followers/:id" element={<FollowersList />} />
             <Route path="/following/:id" element={<FollowingList />} />
-            <Route path="/comments/:id/:postId" element={<Comments />} />
+            <Route path="/comments/:postId" element={<Comments />} />
             <Route path="/userChat/:personId" element={<UserChat />} />
           </Route>
           <Route path="*" element={<h1>Page Not Found</h1>} />
@@ -116,6 +116,21 @@ function LayoutWrapper() {
 }
 
 function App() {
+  const getPreferredTheme = () => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const [theme, setTheme] = useState(getPreferredTheme);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
   return (
     <div className="app">
       <BrowserRouter>

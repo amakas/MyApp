@@ -148,8 +148,8 @@ export const ListOfPeople = ({
           <div onClick={handleClick} className="people-item" key={person._id}>
             <img
               src={profilePictureUrl}
-              width="60"
-              height="60"
+              width="50"
+              height="50"
               alt="Avatar"
               className={pictureClass}
               title="Avatar"

@@ -1,25 +1,23 @@
-footer{
-    background-color: #f2e797;
-    padding: 10px 0 10px 0;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    font-size: 18px;
-    color: #6c757d;
-    border-top: 1px solid #000000;
-    position: relative;
-    height:60px;
-    bottom: 0;
-    width: 100%;
-    
+@use "../style-vars/variables.scss";
+footer {
+  padding: 10px 0 10px 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  font-size: 18px;
+  background: var(--footer-bg-color);
+  color: var(--text-color);
+  border-top: 1px solid #000000;
+  position: relative;
+  height: 60px;
+  bottom: 0;
+  width: 100%;
 }
 
 div .container {
-    max-width: 1200px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .text {
-    font-size: 0.9rem;
-    color: #6c757d;
-   
+  font-size: 0.9rem;
 }

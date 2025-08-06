@@ -1,20 +1,20 @@
+@use "../style-vars/variables.scss";
 ::-webkit-scrollbar {
   display: none;
 }
 
 .chat-page {
   display: flex;
-
   width: 100%;
-
   flex-direction: column;
   align-items: center;
+  color: var(--text-color);
 }
 
 .display {
   height: 300px;
   width: 380px;
-  background-color: #ff9;
+  background-color: var(--chat-bg);
   margin: 10px;
   border: 1px solid black;
   border-radius: 10px;
@@ -23,7 +23,7 @@
 
 .global-display {
   width: 500px;
-  background-color: #ff9;
+  background-color: var(--chat-bg);
   margin: 10px;
   border: 1px solid black;
   border-radius: 10px;
@@ -43,7 +43,7 @@
   overflow: auto;
   text-wrap: wrap;
   resize: none;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 3px;
   padding: 5px;
   height: 50px;
@@ -53,8 +53,9 @@
   width: 60px;
   height: 40px;
   border-radius: 5px;
-  background-color: lightgreen;
-  border: 1px double green;
+  background-color: var(--send-message-bg);
+  border: 1px double var(--send-message-border);
+  color: var(--text-color);
   margin: auto 3px;
   &:hover {
     filter: brightness(1.2);
@@ -87,15 +88,13 @@
   width: 450px;
 }
 .chat-people-item {
-  background-color: rgb(79, 5, 216);
-
+  background-color: rgb(53, 5, 141);
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 12px 15px;
   cursor: pointer;
   transition: background 0.2s;
-  border-bottom: 1px solid #f0f0f0;
   width: 300px;
   margin-top: 10px;
   &:hover {
@@ -108,11 +107,10 @@
     border-radius: 50%;
     object-fit: cover;
   }
-
   p {
     font-size: 16px;
     font-weight: 500;
-    color: #fff;
+    color: white;
   }
 }
 

@@ -1,0 +1,65 @@
+:root {
+  --bg-color: #cee4d5;
+  --text-color: #000;
+  --lighter-color: #494848f8;
+  --footer-bg-color: #ece4a5;
+  --navbar-bg-color: rgb(39, 46, 189);
+  --post-bg-color: rgb(255, 255, 178);
+  --post-text: grey;
+  --chat-bg: #ff9;
+  --send-message-bg: lightgreen;
+  --send-message-border: green;
+  --postform-bg: #fffdf3;
+  --login-bg: #fdfdfd;
+  --choice-color: rgb(6, 32, 64);
+  --editing-bg: #e5ebc7;
+  --card-color: #f7f7f7;
+  --user-bg: #f9f1f1;
+  --user-stats-bg: #d1e7dd;
+  --post-button: #fdd835;
+  --post-button-hover: #fbc02d;
+  --people-bg: rgb(173, 198, 238);
+  --people-item-bg: rgb(230, 229, 229);
+  --people-item-border: #ccc;
+  --button-shadow: #333;
+  --people-brightness: 1.05;
+  --comments-bg: #f4f6f8;
+  --comments-item-bg: #fffdf3;
+  --comments-item-border: #eee0b3;
+  --comment-send-bg: white;
+  --comment-input-bg: rgb(255, 255, 255);
+  --send-button: #1abc9c;
+}
+
+[data-theme="dark"] {
+  --bg-color: #111;
+  --text-color: #eee;
+  --lighter-color: #bcbcbc;
+  --footer-bg-color: #232121;
+  --navbar-bg-color: rgb(27, 27, 42);
+  --post-bg-color: #006;
+  --post-text: rgb(212, 204, 204);
+  --chat-bg: rgb(0, 0, 130);
+  --send-message-bg: rgb(33, 11, 156);
+  --send-message-border: rgb(49, 12, 196);
+  --postform-bg: rgb(30, 5, 66);
+  --login-bg: #333;
+  --choice-color: #cccccca2;
+  --editing-bg: #0d0534;
+  --card-color: #14035e;
+  --user-bg: #170342;
+  --user-stats-bg: #200578;
+  --post-button: #5a25a9;
+  --post-button-hover: #7431d9;
+  --people-bg: rgb(4, 27, 63);
+  --people-item-bg: rgb(90, 3, 3);
+  --people-item-border: rgb(74, 6, 6);
+  --button-shadow: #949191;
+  --people-brightness: 1.1;
+  --comments-bg: #021e39;
+  --comments-item-bg: #082652;
+  --comments-item-border: #1b086f;
+  --comment-send-bg: rgb(17, 3, 58);
+  --comment-input-bg: rgb(84, 84, 207);
+  --send-button: green;
+}

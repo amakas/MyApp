@@ -1,6 +1,8 @@
-@use  '../styles/mixins';
+@use "../styles/mixins";
+@use "../style-vars/variables.scss";
 
-.privacy-page{
+.privacy-page {
   @include mixins.page;
   width: 100%;
+  color: var(--text-color);
 }

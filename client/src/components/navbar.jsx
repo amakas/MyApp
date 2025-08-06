@@ -13,7 +13,21 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState({ users: [], posts: [] });
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const getPreferredTheme = () => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const [theme, setTheme] = useState(getPreferredTheme);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
   const navigate = useNavigate();
   const searchRef = useRef(null);
   const token = localStorage.getItem("token");
@@ -152,6 +166,11 @@ function Navbar() {
         </div>
 
         <ol className="buttons-list">
+          <li>
+            <button className="toggle-theme" onClick={toggleTheme}>
+              {theme === "dark" ? "🌞" : "🌙"}
+            </button>
+          </li>
           <li>
             <LogoutButton />
           </li>

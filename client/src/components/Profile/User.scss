@@ -1,10 +1,11 @@
 .user-profile {
-  width: 50%;
-  background-color: #f9f1f1;
+  width: 60%;
+  background-color: var(--user-bg);
   margin: 30px auto;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px var(--bg-color);
   padding: 30px;
+  color: var(--text-color);
 }
 
 .profile-header {
@@ -62,7 +63,7 @@
 }
 
 .user-stats p {
-  background-color: #d1e7dd;
+  background-color: var(--user-stats-bg);
   padding: 10px 20px;
   border-radius: 10px;
   font-weight: bold;
@@ -82,5 +83,5 @@
 
 a {
   text-decoration: none;
-  color: #333;
+  color: inherit;
 }

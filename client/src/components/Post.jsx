@@ -41,7 +41,7 @@ export default function Post({
   const seenPosts = useRef(new Set());
   const handleComments = (e) => {
     e.stopPropagation();
-    navigate(`/comments/${userId}/${postId}`);
+    navigate(`/comments/${postId}`);
   };
 
   useEffect(() => {

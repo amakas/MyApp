@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ListOfPeople } from "../components/peopleList";
 import { useState, useEffect } from "react";
-
+import "./Followers.scss";
 export const FollowersList = () => {
   const [followers, setFollowers] = useState([]);
   const userId = localStorage.getItem("userId");

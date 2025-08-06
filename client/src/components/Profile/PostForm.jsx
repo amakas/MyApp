@@ -74,6 +74,7 @@ export default function PostForm({ posts, setPosts }) {
           id="title"
           name="title"
           className="title"
+          placeholder="Some title"
           value={formData.title}
           onChange={handleChange}
         />

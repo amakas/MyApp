@@ -1,6 +1,7 @@
-@use  '../styles/mixins';
-
-.terms-page{
+@use "../styles/mixins";
+@use "../style-vars/variables.scss";
+.terms-page {
   @include mixins.page;
   width: 100%;
+  color: var(--text-color);
 }

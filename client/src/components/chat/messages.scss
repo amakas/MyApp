@@ -1,7 +1,4 @@
-@mixin border {
-  border-radius: 15px;
-}
-
+@use "../../style-vars/variables.scss";
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -31,17 +28,18 @@
   display: flex;
   gap: 10px;
   font-size: x-small;
-  color: gray;
+  color: var(--text-color);
   margin-bottom: 3px;
   margin-left: 5px;
   margin-right: 5px;
 }
 
 .message-content {
-  @include border;
-  background-color: aliceblue;
-  padding: 5px;
+  background-color: rgb(238, 247, 255);
+  padding: 3px;
   font-size: 12px;
   max-width: 80%;
   word-wrap: break-word;
+  color: black;
+  border-radius: 10px;
 }

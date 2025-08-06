@@ -1,13 +1,17 @@
+@use "./style-vars/variables.scss";
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: #b9e3c6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   color: #333;
   text-align: center;
   display: flex;
@@ -32,10 +36,4 @@ body,
   flex: 1;
   padding-top: 70px;
   padding-bottom: 60px;
-}
-
-footer {
-  height: 60px;
-  background: #333;
-  color: white;
 }

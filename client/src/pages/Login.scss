@@ -1,22 +1,25 @@
+@use "../style-vars/variables.scss";
+
 .login-page {
   max-width: 400px;
   margin: 40px auto;
   padding: 30px;
-  background-color: #fdfdfd;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: var(--login-bg);
+  color: var(--text-color);
+  box-shadow: 0 4px 12px var(--login-bg);
   border-radius: 12px;
   font-family: "Segoe UI", sans-serif;
   text-align: center;
 
   .login-title {
     font-size: 2rem;
-    color: #2c3e50;
+    color: inherit;
     margin-bottom: 10px;
   }
 
   .login-subtext {
     font-size: 14px;
-    color: #777;
+    color: inherit;
     margin-bottom: 20px;
   }
 
@@ -34,7 +37,7 @@
     label {
       font-weight: bold;
       margin-bottom: 6px;
-      color: #444;
+      color: inherit;
     }
 
     input {
@@ -59,7 +62,7 @@
       font-size: 16px;
       font-weight: 600;
       background-color: #3498db;
-      color: white;
+      color: inherit;
       border: none;
       border-radius: 8px;
       cursor: pointer;
