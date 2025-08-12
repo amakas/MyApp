@@ -13,6 +13,9 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState({ users: [], posts: [] });
   const [showDropdown, setShowDropdown] = useState(false);
+  const [me, setMe] = useState("");
+  const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
   const getPreferredTheme = () => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved;
@@ -21,6 +24,7 @@ function Navbar() {
       : "light";
   };
   const [theme, setTheme] = useState(getPreferredTheme);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
@@ -41,6 +45,27 @@ function Navbar() {
     };
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
+    const handleClickOut = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOut);
+    return () => document.removeEventListener("click", handleClickOut);
   }, []);
 
   useEffect(() => {
@@ -82,100 +107,142 @@ function Navbar() {
     setShowDropdown(false);
     setSearchQuery("");
   };
+  useEffect(() => {
+    const fethMe = async () => {
+      try {
+        const response = await fetch("/api/users/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.ok) {
+          const me = await response.json();
+          setMe(me);
+        }
+      } catch (err) {
+        console.error("Fail to fetch me", err);
+      }
+    };
+    fethMe();
+  }, [token]);
 
   return (
-    <div>
-      <nav className="navbar">
-        <ol className="pages-list">
-          <li className={location.pathname === "/home" ? "active" : ""}>
-            <Link to={`/home`}>Home</Link>
-          </li>
-          <li className={location.pathname === "/chat" ? "active" : ""}>
-            <Link to={`/chat`}>Chat</Link>
-          </li>
-          <li className={location.pathname === "/settings" ? "active" : ""}>
-            <Link to={`/settings`}>Settings</Link>
-          </li>
-          <li className={location.pathname === "/profile" ? "active" : ""}>
-            <Link to={`/profile`}>Profile</Link>
-          </li>
-          <li className={location.pathname === "/people" ? "active" : ""}>
-            <Link to={`/people`}>People</Link>
-          </li>
-        </ol>
+    <div className="nav-header">
+      <div ref={open ? navRef : null}>
+        <div className="logo-me">
+          <button
+            className={`burger ${open ? "" : ""}`}
+            onClick={() => setOpen(!open)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
 
-        <div className="search-bar" ref={searchRef}>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setShowDropdown(true)}
-          />
-          <FontAwesomeIcon className="glass" icon={faMagnifyingGlass} />
+          <div className="logo">
+            <img src="src/imgs/logo.png" />
+            <p className="app-name">Toka</p>
+          </div>
+        </div>
+        <nav className={`menu ${open ? "show" : "closing"}`}>
+          <ol className="pages-list">
+            <button
+              className={`burger ${open ? "open" : ""}`}
+              onClick={() => setOpen(!open)}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
 
-          {showDropdown && (
-            <div className="search-dropdown">
-              {results.users.length === 0 && results.posts.length === 0 ? (
-                <p className="no-results">No results found</p>
-              ) : (
-                results.users.length > 0 && (
-                  <>
-                    <p className="dropdown-title">Users</p>
-                    {results.users.map((user) => (
-                      <div
-                        key={user._id}
-                        className="dropdown-item"
-                        onClick={() => handleGoToUser(user._id)}
-                      >
-                        <img
-                          src={
-                            user.profilePicture
-                              ? `${BaseUrl}${user.profilePicture}`
-                              : `https://ui-avatars.com/api/?name=${user.username}`
-                          }
-                          alt="avatar"
-                        />
-                        <span>{user.username}</span>
-                      </div>
-                    ))}
-                  </>
-                )
-              )}
+            <li className={location.pathname === "/home" ? "active" : ""}>
+              <Link to={`/home`}>Home</Link>
+            </li>
 
-              {results.posts.length > 0 && (
+            <li className={location.pathname === "/profile" ? "active" : ""}>
+              <Link to={`/profile`}>Profile</Link>
+            </li>
+            <li className={location.pathname === "/people" ? "active" : ""}>
+              <Link to={`/people`}>People</Link>
+            </li>
+            <li className={location.pathname === "/chat" ? "active" : ""}>
+              <Link to={`/chat`}>Chat</Link>
+            </li>
+            <li className={location.pathname === "/dialogs" ? "active" : ""}>
+              <Link to={`/dialogs`}>Dialogs</Link>
+            </li>
+            <li className={location.pathname === "/settings" ? "active" : ""}>
+              <Link to={`/settings`}>Settings</Link>
+            </li>
+          </ol>
+          <LogoutButton />
+        </nav>
+      </div>
+
+      <div className="search-bar" ref={searchRef}>
+        <input
+          className="search-input input"
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setShowDropdown(true)}
+        />
+        <FontAwesomeIcon className="glass" icon={faMagnifyingGlass} />
+
+        {showDropdown && (
+          <div className="search-dropdown">
+            {results.users.length === 0 && results.posts.length === 0 ? (
+              <p className="no-results">No results found</p>
+            ) : (
+              results.users.length > 0 && (
                 <>
-                  <p className="dropdown-title">Posts</p>
-                  {results.posts.map((post) => (
+                  <p className="dropdown-title">Users</p>
+                  {results.users.map((user) => (
                     <div
-                      key={post._id}
+                      key={user._id}
                       className="dropdown-item"
-                      onClick={() => handleGoToPost(post._id)}
+                      onClick={() => handleGoToUser(user._id)}
                     >
-                      <span className="post-title">{post.title}</span>
-                      <span className="post-content">
-                        {post.content.slice(0, 30)}...
-                      </span>
+                      <img
+                        src={
+                          user.profilePicture
+                            ? `${BaseUrl}${user.profilePicture}`
+                            : `https://ui-avatars.com/api/?name=${user.username}`
+                        }
+                        alt="avatar"
+                      />
+                      <span>{user.username}</span>
                     </div>
                   ))}
                 </>
-              )}
-            </div>
-          )}
-        </div>
+              )
+            )}
 
-        <ol className="buttons-list">
-          <li>
-            <button className="toggle-theme" onClick={toggleTheme}>
-              {theme === "dark" ? "🌞" : "🌙"}
-            </button>
-          </li>
-          <li>
-            <LogoutButton />
-          </li>
-        </ol>
-      </nav>
+            {results.posts.length > 0 && (
+              <>
+                <p className="dropdown-title">Posts</p>
+                {results.posts.map((post) => (
+                  <div
+                    key={post._id}
+                    className="dropdown-item"
+                    onClick={() => handleGoToPost(post._id)}
+                  >
+                    <span className="post-title">{post.title}</span>
+                    <span className="post-content">
+                      {post.content.slice(0, 30)}...
+                    </span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="buttons-list">
+        <button className="toggle-theme" onClick={toggleTheme}>
+          {theme === "dark" ? "🌞" : "🌙"}
+        </button>
+      </div>
     </div>
   );
 }

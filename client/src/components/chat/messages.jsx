@@ -1,7 +1,21 @@
 import "./messages.scss";
-export const Messages = ({ messages, messagesEndRef }) => {
+export const Messages = ({
+  messages,
+  messagesEndRef,
+  handleClick,
+  hasMoreMessages,
+  messagesRef,
+  showDown,
+  setShowDown,
+}) => {
   return (
-    <div className="message-list">
+    <div className="message-list" ref={messagesRef}>
+      {hasMoreMessages && (
+        <button className="old-messages" onClick={handleClick}>
+          Show more messages
+        </button>
+      )}
+
       {messages.map((message, i) => (
         <div
           key={i}
@@ -14,7 +28,18 @@ export const Messages = ({ messages, messagesEndRef }) => {
           <p className="message-content">{message.content}</p>
         </div>
       ))}
-      <div ref={messagesEndRef} />
+      {showDown && (
+        <button
+          className="new-messages"
+          onClick={() => {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            setShowDown(false);
+          }}
+        >
+          New messages
+        </button>
+      )}
+      <div ref={messagesEndRef}></div>
     </div>
   );
 };

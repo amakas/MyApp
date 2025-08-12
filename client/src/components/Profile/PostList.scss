@@ -2,8 +2,9 @@
 
 .post-list {
   max-width: 800px;
+  width: 90%;
   margin: auto;
-  padding: 0 10px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -14,7 +15,7 @@
 .h-container {
   display: flex;
   justify-content: center;
-  gap: 30px;
+
   margin-bottom: 10px;
 }
 
@@ -32,7 +33,7 @@
 }
 
 .post-item {
-  padding: 20px 24px;
+  padding: 20px;
   margin: 10px;
   position: relative;
   box-shadow: 0 4px 12px var(--post-bg-color);
@@ -42,13 +43,6 @@
   background: var(--post-bg-color);
   color: var(--post-text);
   border-radius: 12px;
-}
-
-.post-item h2 {
-  font-size: 1.5rem;
-  color: inherit;
-  text-align: center;
-  margin-bottom: 10px;
 }
 
 .post-item p {
@@ -65,7 +59,7 @@
   min-height: 80px;
   padding: 12px;
   font-size: 14px;
-  border: 1px solid #ccc;
+
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
@@ -148,6 +142,7 @@ button {
 .post-header {
   display: flex;
   flex-direction: column;
+
   gap: 4px;
   border-bottom: 1px solid var(--post-text);
 }
@@ -156,7 +151,6 @@ button {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  column-gap: 150px;
 }
 
 .post-username {
@@ -174,4 +168,78 @@ button {
   color: inherit;
   font-weight: 600;
   margin-top: 4px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--post-text);
+}
+
+.stats button,
+.stats p {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.stats button:hover {
+  color: #3498db;
+}
+
+.liked {
+  color: #e74c3c !important;
+}
+
+.notLiked {
+  color: #aaa;
+}
+
+.share-icon,
+.comments-icon,
+.report-icon,
+.like-icon {
+  font-size: 14px;
+}
+
+.views {
+  color: #a6afaf !important ;
+  font-size: 13px;
+  flex-wrap: nowrap;
+  &:hover {
+    cursor: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats p,
+  .stats button {
+    font-size: 10px;
+  }
+  .stats {
+    gap: 0;
+  }
+  .post-content {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats p,
+  .stats button {
+    font-size: 12px;
+  }
+  .stats {
+    gap: 0;
+  }
 }

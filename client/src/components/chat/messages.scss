@@ -9,7 +9,12 @@
     transform: translateY(0);
   }
 }
-
+.message-list {
+  overflow-y: auto;
+  height: 100%;
+  position: relative;
+  scroll-behavior: initial;
+}
 .my-message,
 .someone-message {
   display: flex;
@@ -42,4 +47,35 @@
   word-wrap: break-word;
   color: black;
   border-radius: 10px;
+}
+
+.new-messages {
+  position: sticky;
+  bottom: 10px;
+  margin: 10px auto;
+  z-index: 10;
+  background-color: var(--new-messages-button);
+  color: var(--text-color);
+  font-weight: 500;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  width: max-content;
+  animation: fadeInUp 0.3s ease;
+}
+
+.old-messages {
+  margin: 10px auto;
+  z-index: 10;
+  background-color: var(--old-messages-button);
+  color: var(--text-color);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  width: max-content;
+  animation: fadeInUp 0.3s ease;
 }

@@ -107,9 +107,11 @@ export default function EditProfile() {
           <label htmlFor="profile-picture">Profile Picture:</label>
           <img
             src={
-              existingProfilePicture.startsWith("http")
-                ? existingProfilePicture
-                : `${BaseUrl}${existingProfilePicture}`
+              existingProfilePicture
+                ? existingProfilePicture.startsWith("http")
+                  ? existingProfilePicture
+                  : `${BaseUrl}${existingProfilePicture}`
+                : `https://ui-avatars.com/api/?name=${formData.username}`
             }
             className="picture"
             width={100}
@@ -126,6 +128,7 @@ export default function EditProfile() {
         <div className="edit-details">
           <label htmlFor="firstname">First Name:</label>
           <input
+            className="input"
             type="text"
             id="firstname"
             name="firstname"
@@ -134,6 +137,7 @@ export default function EditProfile() {
           />
           <label htmlFor="lastname">Last Name:</label>
           <input
+            className="input"
             type="text"
             id="lastname"
             name="lastname"
@@ -142,6 +146,7 @@ export default function EditProfile() {
           />
           <label htmlFor="username">Username:</label>
           <input
+            className="input"
             type="text"
             id="username"
             name="username"
@@ -150,6 +155,7 @@ export default function EditProfile() {
           />
           <label htmlFor="bio">Bio:</label>
           <textarea
+            className="input"
             id="bio"
             name="bio"
             rows="4"
@@ -161,6 +167,7 @@ export default function EditProfile() {
         <div className="edit-details">
           <label htmlFor="location">Location:</label>
           <input
+            className="input"
             type="text"
             id="location"
             name="location"
@@ -171,6 +178,7 @@ export default function EditProfile() {
         <div className="edit-details">
           <label htmlFor="phoneNumber">Phone Number:</label>
           <input
+            className="input"
             type="tel"
             id="phoneNumber"
             name="phoneNumber"
@@ -179,6 +187,7 @@ export default function EditProfile() {
           />
           <label htmlFor="profession">Profession:</label>
           <input
+            className="input"
             type="text"
             id="profession"
             name="profession"

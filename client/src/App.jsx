@@ -14,6 +14,7 @@ import React from "react";
 import Navbar from "./components/navbar";
 import Profile from "./pages/Profile";
 import Footer from "./components/footer";
+import Dialogs from "./pages/Dialogs";
 import EntryRedirect from "./pages/Redirect";
 import "./main.scss";
 import EditProfile from "./components/Profile/EditProfile";
@@ -28,6 +29,7 @@ import { Comments } from "./pages/Comments";
 import UserChat from "./pages/UserChat";
 import { useEffect, useState } from "react";
 import { initSocket, getSocket } from "./socket";
+
 function LayoutWrapper() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,6 +38,17 @@ function LayoutWrapper() {
   const hideLayoutOn = ["/login", "/register", "/terms", "/privacy"];
   const hideLayout = hideLayoutOn.includes(location.pathname);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      initSocket(token);
+
+      const s = getSocket();
+      return () => {
+        s.off("connection");
+      };
+    }
+  }, []);
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get("token");
@@ -106,6 +119,7 @@ function LayoutWrapper() {
             <Route path="/following/:id" element={<FollowingList />} />
             <Route path="/comments/:postId" element={<Comments />} />
             <Route path="/userChat/:personId" element={<UserChat />} />
+            <Route path="/dialogs" element={<Dialogs />} />
           </Route>
           <Route path="*" element={<h1>Page Not Found</h1>} />
         </Routes>

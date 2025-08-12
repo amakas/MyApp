@@ -24,12 +24,6 @@ function Profile() {
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      initSocket(token);
-    }
-  }, []);
-  useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
       const id = localStorage.getItem("userId");

@@ -19,15 +19,34 @@ function Chat() {
   const messagesEndRef = useRef(null);
   const navigate = useNavigate();
   const messagesRef = useRef(null);
-  const [loading, setLoading] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const [people, setPeople] = useState([]);
-
+  const [more, setMore] = useState(false);
+  const [hasMoreMessages, setHasMoreMessages] = useState(true);
+  const [showDown, setShowDown] = useState(false);
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const container = messagesRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const isAtBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        400;
+      setShowDown(!isAtBottom);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const handleChange = (e) => {
     setText(e.target.value);
   };
-
   const handleClick = (e) => {
     e.preventDefault();
     if (!text) return;
@@ -45,6 +64,11 @@ function Chat() {
     setSocket(s);
 
     s.on("message", (data) => {
+      const container = messagesRef.current;
+      const isAtBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        50;
+
       const { content, username, createdAt, updatedAt } = data;
       let hours = new Date(createdAt).getHours();
       let minutes = new Date(createdAt).getMinutes();
@@ -60,7 +84,15 @@ function Chat() {
       }
       const sendTime = `${hours}:${minutes}:${seconds}`;
       const isMine = username === myusername;
-      setShouldScrollToBottom(true);
+      if (isAtBottom) {
+        setShouldScrollToBottom(true);
+        setShowDown(false);
+      }
+      if (!isAtBottom && !isMine) {
+        setShouldScrollToBottom(false);
+        setShowDown(true);
+      }
+
       setMessages((prev) => [
         ...prev,
         { content, username, sendTime: sendTime, updatedAt, isMine },
@@ -90,14 +122,13 @@ function Chat() {
   }, [token]);
 
   useEffect(() => {
-    setLoading(true);
     const fetchMessages = async () => {
       if (!token) {
         navigate("/");
         return;
       }
       try {
-        const response = await fetch(`/api/messages`, {
+        const response = await fetch(`/api/messages?page=0&limit=100`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -114,7 +145,6 @@ function Chat() {
           return { content, username, sendTime, updatedAt, isMine };
         });
         setMessages(msgs);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching messages", error);
       }
@@ -124,17 +154,74 @@ function Chat() {
 
   useEffect(() => {
     if (shouldScrollToBottom) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "auto",
+      });
     }
   }, [messages]);
+  const handleMore = () => {
+    setMore(true);
+  };
+
+  useEffect(() => {
+    if (!more || !hasMoreMessages) return;
+
+    const fetchOlderMessages = async () => {
+      const nextPage = page + 1;
+      setShouldScrollToBottom(false);
+      const container = messagesRef.current;
+      const scrollHeightBefore = container.scrollHeight;
+
+      try {
+        const response = await fetch(
+          `/api/messages?page=${nextPage}&limit=50`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (data.length === 0) {
+          setHasMoreMessages(false);
+          return;
+        }
+        if (data.length < 30) {
+          setHasMoreMessages(false);
+        }
+        const allMsgs = data.filter((el) => !el.receiverId);
+
+        const msgs = allMsgs.map((msg) => {
+          const { content, username, createdAt, updatedAt } = msg;
+          const sendTime = new Date(createdAt).toLocaleTimeString("uk-UA", {
+            hour12: false,
+          });
+          const isMine = username === myusername;
+          return { content, username, sendTime, updatedAt, isMine };
+        });
+
+        setMessages((prev) => [...msgs, ...prev]);
+        setPage(nextPage);
+        requestAnimationFrame(() => {
+          const scrollHeightAfter = container.scrollHeight;
+          container.scrollTop = scrollHeightAfter - scrollHeightBefore;
+        });
+      } catch (error) {
+        console.error("Error fetching messages", error);
+      } finally {
+        setMore(false);
+      }
+    };
+    fetchOlderMessages();
+  }, [more, myusername]);
 
   return (
     <div className="chat-page">
-      <h1>Global chat</h1>
+      <h1>Global Chat</h1>
       <div className="global-main-box">
         <div className="global-people-box">
           <div className="people-chats">
-            <h2>Dialogs</h2>
+            <h2>Dialogs:</h2>
             {people.map((person) => {
               const profilePicture = person.profilePicture
                 ? person.profilePicture.startsWith("http")
@@ -162,14 +249,19 @@ function Chat() {
         </div>
         <div className="messages-box">
           <div className="global-display">
-            <div className="messages-scroll">
-              <Messages messages={messages} messagesEndRef={messagesEndRef} />
-            </div>
+            <Messages
+              messagesRef={messagesRef}
+              messages={messages}
+              messagesEndRef={messagesEndRef}
+              handleClick={handleMore}
+              hasMoreMessages={hasMoreMessages}
+              showDown={showDown}
+              setShowDown={setShowDown}
+            />
           </div>
           <div className="message">
             <textarea
-              rows={3}
-              className="global input-message"
+              className="global input-message input"
               name="text"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -179,8 +271,13 @@ function Chat() {
               }}
               onChange={handleChange}
               value={text}
+              autoFocus
+              placeholder="Your message..."
             />
-            <button className="send-message" onClick={handleClick}>
+            <button
+              className={text === "" ? "disabled" : "send-message"}
+              onClick={handleClick}
+            >
               Send
             </button>
           </div>

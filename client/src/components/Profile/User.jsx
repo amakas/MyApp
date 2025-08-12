@@ -21,21 +21,21 @@ export default function User({
 }) {
   const navigate = useNavigate();
 
-  let { userId } = useParams();
-  if (!userId) userId = localStorage.getItem("userId");
+  let { id } = useParams();
+  if (!id) id = localStorage.getItem("userId");
 
   const postLength = posts.length;
   const followers = followersArr.length;
   const following = followingArr.length;
   const handleFollowers = () => {
-    navigate(`/followers/${userId}`);
+    navigate(`/followers/${id}`);
   };
   const handleFollowing = () => {
-    navigate(`/following/${userId}`);
+    navigate(`/following/${id}`);
   };
   return (
     <section className="user-profile">
-      <h1 className="profile-title">{username}'s Profile</h1>
+      <h1 className="profile-title">{username}</h1>
       <div className="profile-header">
         <img
           src={profilePicture}
@@ -57,11 +57,11 @@ export default function User({
       </div>
       <div className="user-details">
         <p className="username">Username: {username}</p>
-        <p className="email">Email: {email}</p>
 
         <p className="location">Location: {location}</p>
         <p className="number">Phone Number: {phoneNumber}</p>
         <p className="profession">Profession: {profession}</p>
+        <p className="email">Email: {email}</p>
       </div>
 
       <div className="user-stats">

@@ -3,13 +3,15 @@
   --text-color: #000;
   --lighter-color: #494848f8;
   --footer-bg-color: #ece4a5;
-  --navbar-bg-color: rgb(39, 46, 189);
-  --post-bg-color: rgb(255, 255, 178);
-  --post-text: grey;
-  --chat-bg: #ff9;
-  --send-message-bg: lightgreen;
+  --navbar-bg-color: #04638c;
+  --post-bg-color: rgb(255, 252, 174);
+  --post-text: rgb(81, 80, 80);
+  --chat-bg: #f7faff;
+  --old-messages-button: #f1f0f0;
+  --send-message-bg: #1abc9c;
+  --send-message-border: #16a085;
   --send-message-border: green;
-  --postform-bg: #fffdf3;
+  --postform-bg: #f5f1dc;
   --login-bg: #fdfdfd;
   --choice-color: rgb(6, 32, 64);
   --editing-bg: #e5ebc7;
@@ -29,6 +31,9 @@
   --comment-send-bg: white;
   --comment-input-bg: rgb(255, 255, 255);
   --send-button: #1abc9c;
+  --input-bg: rgb(255, 255, 255);
+  --dialogs-bg: rgb(173, 198, 238);
+  --dropdown-bg-hover: rgb(184, 232, 247);
 }
 
 [data-theme="dark"] {
@@ -36,12 +41,14 @@
   --text-color: #eee;
   --lighter-color: #bcbcbc;
   --footer-bg-color: #232121;
-  --navbar-bg-color: rgb(27, 27, 42);
+  --navbar-bg-color: #1e2a57;
   --post-bg-color: #006;
   --post-text: rgb(212, 204, 204);
-  --chat-bg: rgb(0, 0, 130);
-  --send-message-bg: rgb(33, 11, 156);
-  --send-message-border: rgb(49, 12, 196);
+  --chat-bg: #0e1b3f;
+  --old-messages-button: #0d053b;
+  --new-messages-button: #011d3c;
+  --send-message-bg: #1abc9c;
+  --send-message-border: #16a085;
   --postform-bg: rgb(30, 5, 66);
   --login-bg: #333;
   --choice-color: #cccccca2;
@@ -49,11 +56,11 @@
   --card-color: #14035e;
   --user-bg: #170342;
   --user-stats-bg: #200578;
-  --post-button: #5a25a9;
-  --post-button-hover: #7431d9;
+  --post-button: #f1c40f;
+  --post-button-hover: #d4ac0d;
   --people-bg: rgb(4, 27, 63);
-  --people-item-bg: rgb(90, 3, 3);
-  --people-item-border: rgb(74, 6, 6);
+  --people-item-bg: #142850;
+  --people-item-border: #0f1d3a;
   --button-shadow: #949191;
   --people-brightness: 1.1;
   --comments-bg: #021e39;
@@ -62,4 +69,7 @@
   --comment-send-bg: rgb(17, 3, 58);
   --comment-input-bg: rgb(84, 84, 207);
   --send-button: green;
+  --input-bg: rgb(55, 55, 90);
+  --dialogs-bg: rgb(4, 27, 63);
+  --dropdown-bg-hover: rgb(65, 61, 125);
 }

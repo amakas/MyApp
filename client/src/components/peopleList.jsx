@@ -87,6 +87,9 @@ export const ListOfPeople = ({
           : "defaultPicture";
         const handleClick = () => {
           localStorage.setItem("personId", personId);
+          if (personId === userId) {
+            return;
+          }
           navigate(`/userProfile/${personId}`);
         };
         const handleFollow = async (e, personId) => {
@@ -146,50 +149,57 @@ export const ListOfPeople = ({
 
         return (
           <div onClick={handleClick} className="people-item" key={person._id}>
-            <img
-              src={profilePictureUrl}
-              width="50"
-              height="50"
-              alt="Avatar"
-              className={pictureClass}
-              title="Avatar"
-            />
             <div className="person-details">
-              <div className="name-username">
-                <p className="person-username">{person.username}</p>
-                <p className="person-name">
-                  {person.firstname} {person.lastname}
-                </p>
-              </div>
-              {!person.isOnline ? (
-                <div className="online-offline">
-                  Offline 🔴 <p>Last seen: {formatLastSeen(person.lastSeen)}</p>
+              <div className="person-img-name">
+                <img
+                  src={profilePictureUrl}
+                  width="50"
+                  height="50"
+                  alt="Avatar"
+                  className={pictureClass}
+                  title="Avatar"
+                />
+                <div className="name-username">
+                  <p className="person-username">{person.username}</p>
                 </div>
-              ) : (
-                <div className="online-offline">Online 🟢</div>
-              )}
-            </div>
-            <div>
-              <button
-                className={
-                  isFollowing
-                    ? "follow-button followed"
-                    : "follow-button notfollowed"
-                }
-                onClick={(e) => handleFollow(e, person._id)}
-              >
-                {isFollowing ? "Unfollow" : "Follow"}
-              </button>
+              </div>
+              <div className="buttons-div">
+                {!person.isOnline ? (
+                  <div className="online-offline">
+                    Offline 🔴{" "}
+                    <p className="last-seen">
+                      Last seen: {formatLastSeen(person.lastSeen)}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="online-offline">Online 🟢</div>
+                )}
+              </div>
+              <div>
+                <button
+                  className={
+                    isFollowing
+                      ? "follow-button followed"
+                      : "follow-button notfollowed"
+                  }
+                  onClick={(e) => handleFollow(e, person._id)}
+                >
+                  {isFollowing ? "Unfollow" : "Follow"}
+                </button>
 
-              <button
-                className="message-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/userChat/${person._id}`);
-                }}
-              >
-                Message
-              </button>
+                <button
+                  className="message-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (person._id === userId) {
+                      return;
+                    }
+                    navigate(`/userChat/${person._id}`);
+                  }}
+                >
+                  Message
+                </button>
+              </div>
             </div>
           </div>
         );

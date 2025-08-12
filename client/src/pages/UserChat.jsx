@@ -12,18 +12,40 @@ export default function UserChat() {
   const [socket, setSocket] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(true);
   const { personId } = useParams();
-  const [loading, setLoading] = useState(false);
+  const [more, setMore] = useState(false);
+  const [hasMoreMessages, setHasMoreMessages] = useState(true);
+  const [showDown, setShowDown] = useState(false);
+  const [page, setPage] = useState(0);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const messagesEndRef = useRef(null);
+  const messagesRef = useRef(null);
   const myusername = localStorage.getItem("username");
   const navigate = useNavigate();
+  useEffect(() => {
+    const container = messagesRef.current;
+    if (!container) return;
 
+    const handleScroll = () => {
+      const isAtBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        200;
+      setShowDown(!isAtBottom);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const handleChange = (e) => {
     setText(e.target.value);
   };
   const handleClick = (e) => {
     e.preventDefault();
+    if (text === "") return;
     if (socket) {
       socket.emit("message", {
         content: text,
@@ -58,7 +80,18 @@ export default function UserChat() {
       }
       const sendTime = `${hours}:${minutes}:${seconds}`;
       const isMine = username === myusername;
-      setShouldScrollToBottom(true);
+      const container = messagesRef.current;
+      const isAtBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        50;
+      if (isAtBottom) {
+        setShouldScrollToBottom(true);
+        setShowDown(false);
+      }
+      if (!isAtBottom && !isMine) {
+        setShouldScrollToBottom(false);
+        setShowDown(true);
+      }
       setMessages((prev) => [
         ...prev,
         { content, username, sendTime: sendTime, updatedAt, isMine },
@@ -77,11 +110,14 @@ export default function UserChat() {
         return;
       }
       try {
-        const response = await fetch(`/api/messages/${personId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `/api/messages/${personId}?limit=50&page=0`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = await response.json();
         const msgs = data.map((msg) => {
           const { content, username, createdAt, updatedAt } = msg;
@@ -92,6 +128,9 @@ export default function UserChat() {
           return { content, username, sendTime, updatedAt, isMine };
         });
         setMessages(msgs);
+        if (msgs.length <= 50) {
+          setHasMoreMessages(false);
+        }
       } catch (error) {
         console.error("Error fetching messages", error);
       }
@@ -153,6 +192,69 @@ export default function UserChat() {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  const handleMore = () => {
+    setMore(true);
+  };
+
+  useEffect(() => {
+    if (!more || !hasMoreMessages) return;
+
+    const fetchOlderMessages = async () => {
+      const nextPage = page + 1;
+      setShouldScrollToBottom(false);
+      const container = messagesRef.current;
+      const scrollHeightBefore = container.scrollHeight;
+
+      try {
+        const response = await fetch(
+          `/api/messages/${personId}?page=${nextPage}&limit=50`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (data.length === 0) {
+          setHasMoreMessages(false);
+          return;
+        }
+        if (data.length <= 50) {
+          setHasMoreMessages(false);
+        }
+        const allMsgs = data;
+
+        const msgs = allMsgs.map((msg) => {
+          const { content, username, createdAt, updatedAt } = msg;
+          const sendTime = new Date(createdAt).toLocaleTimeString("uk-UA", {
+            hour12: false,
+          });
+          const isMine = username === myusername;
+          return { content, username, sendTime, updatedAt, isMine };
+        });
+
+        setMessages((prev) => [...msgs, ...prev]);
+        setPage(nextPage);
+        requestAnimationFrame(() => {
+          const scrollHeightAfter = container.scrollHeight;
+          container.scrollTop = scrollHeightAfter - scrollHeightBefore;
+        });
+      } catch (error) {
+        console.error("Error fetching messages", error);
+      } finally {
+        setMore(false);
+      }
+    };
+    fetchOlderMessages();
+  }, [more, myusername]);
+
+  useEffect(() => {
+    if (shouldScrollToBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+    }
+  }, [messages]);
+
   return (
     <div className="chat-page">
       <div className="chat-header">
@@ -161,7 +263,7 @@ export default function UserChat() {
       </div>
       <div className="main-box">
         <div className="people-box">
-          <h2>Dialogs</h2>
+          <h2>Dialogs:</h2>
           <div className="people-chats">
             {people.map((person) => {
               return (
@@ -193,8 +295,15 @@ export default function UserChat() {
           <h2>Chat</h2>
 
           <div className="display">
-            <Messages messages={messages} />
-            <div ref={messagesEndRef}></div>
+            <Messages
+              messages={messages}
+              messagesRef={messagesRef}
+              showDown={showDown}
+              setShowDown={setShowDown}
+              handleClick={handleMore}
+              hasMoreMessages={hasMoreMessages}
+              messagesEndRef={messagesEndRef}
+            />
           </div>
           <div className="message">
             <textarea
@@ -209,8 +318,13 @@ export default function UserChat() {
               }}
               onChange={handleChange}
               value={text}
+              placeholder="Your message..."
             />
-            <button className="send-message" onClick={handleClick}>
+            <button
+              className={text === "" ? "disabled" : "send-message"}
+              disabled={text === ""}
+              onClick={handleClick}
+            >
               Send
             </button>
           </div>
