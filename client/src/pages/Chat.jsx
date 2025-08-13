@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-import "./chat.scss";
+import "./Chat.scss";
 import { initSocket, getSocket } from "../socket";
 import { Messages } from "../components/chat/messages";
 import { useRef } from "react";
