@@ -5,7 +5,7 @@ import LogoutButton from "./buttons/logoutButton";
 import RegisterButton from "./buttons/registerButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
+import logo from "../imgs/logo.png";
 const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
 
 function Navbar() {
@@ -138,7 +138,7 @@ function Navbar() {
           </button>
 
           <div className="logo">
-            <img src="src/imgs/logo.png" />
+            <img src={logo} alt="Logo" />
             <p className="app-name">Toka</p>
           </div>
         </div>
