@@ -205,8 +205,10 @@ function Navbar() {
                       <img
                         src={
                           user.profilePicture
-                            ? `${BaseUrl}${user.profilePicture}`
-                            : `https://ui-avatars.com/api/?name=${user.username}`
+                            ? user.profilePicture.startsWith("http")
+                              ? user.profilePicture
+                              : `${BaseUrl}${user.profilePicture}`
+                            : `https://ui-avatars.com/api/?name=${user.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`
                         }
                         alt="avatar"
                       />

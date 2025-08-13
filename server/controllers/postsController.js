@@ -250,7 +250,7 @@ export const deletepostsByUser = async (req, res) => {
     await Post.deleteMany({ userId });
     res.status(200).json({ message: "deleted successfuly" });
   } catch (error) {
-    console.error(" error deleting posts", error);
+    console.error("error deleting posts", error);
     res.status(500).send("Internal error");
   }
 };

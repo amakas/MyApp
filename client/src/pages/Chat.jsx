@@ -218,7 +218,7 @@ function Chat() {
   return (
     <div className="chat-page">
       <h1>Global Chat</h1>
-      <div className="global-main-box">
+      <div className="main-box">
         <div className="global-people-box">
           <div className="people-chats">
             <h2>Dialogs:</h2>

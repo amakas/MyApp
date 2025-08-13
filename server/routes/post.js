@@ -23,6 +23,7 @@ router.get("/myposts", verifyToken, getMyPosts);
 router.get("/user/:userId", verifyToken, getPostsByUser);
 
 router.get("/", verifyToken, getPosts);
+router.delete("/deleteAll", verifyToken, deletepostsByUser);
 router.delete("/:id", verifyToken, deletePost);
 router.put("/:id", verifyToken, updatePost);
 router.put("/like/:userId/:postId", verifyToken, like);
@@ -31,5 +32,5 @@ router.post("/report/:postId", verifyToken, report);
 router.get("/post/:postId", verifyToken, getPost);
 router.put("/view/:postId", verifyToken, getViews);
 router.get("/followings", verifyToken, getFollowingsPosts);
-router.delete("/deleteAll", verifyToken, deletepostsByUser);
+
 export default router;
