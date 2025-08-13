@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Messages } from "../components/chat/messages";
 import { initSocket, getSocket } from "../socket";
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 export default function UserChat() {
   const [user, setUser] = useState({});
   const [me, setMe] = useState({});

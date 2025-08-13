@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import "./Post.scss";
 import { toast } from "react-toastify";
 
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 
 export default function Post({
   post,

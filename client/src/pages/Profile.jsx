@@ -8,7 +8,7 @@ import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 import { initSocket } from "../socket";
-const BaseUrl = import.meta.env.VITE_BASE_URL;
+const BaseUrl = "https://toka-o14g.onrender.com";
 function Profile() {
   const [userData, setUserData] = useState({});
   const id = localStorage.getItem("userId");

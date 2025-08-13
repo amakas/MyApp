@@ -7,7 +7,7 @@ import PostForm from "../components/Profile/PostForm";
 import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 function UserProfile() {
   const [userData, setUserData] = useState({});
   const [posts, setPosts] = useState([]);

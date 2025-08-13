@@ -6,7 +6,7 @@ import RegisterButton from "./buttons/registerButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from "../imgs/logo.png";
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

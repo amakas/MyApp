@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
-const BaseUrl = import.meta.env.VITE_BASE_URL;
+const BaseUrl = "https://toka-o14g.onrender.com";
 function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

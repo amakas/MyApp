@@ -8,7 +8,7 @@ import { Messages } from "../components/chat/messages";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 
 function Chat() {
   const [messages, setMessages] = useState([]);

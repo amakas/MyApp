@@ -3,7 +3,7 @@ import "./EditProfile.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 export default function EditProfile() {
   const [formData, setFormData] = useState({
     username: "",

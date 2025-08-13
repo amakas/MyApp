@@ -1,7 +1,7 @@
 import "./peopleList.scss";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = "https://toka-o14g.onrender.com";
 import { getSocket } from "../socket";
 export const ListOfPeople = ({
   people,
