@@ -18,7 +18,7 @@ router.get(
   (req, res) => {
     const token = generateJwt(req.user);
 
-    res.redirect(`http://localhost:5000?token=${token}`);
+    res.redirect(`https://toka-o14g.onrender.com?token=${token}`);
   }
 );
 
