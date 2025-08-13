@@ -41,7 +41,7 @@ export const getUserMessages = async (req, res) => {
         },
       ],
     })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limitNum);
     console.log(messages);
