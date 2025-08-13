@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
-
+const BaseUrl = import.meta.env.VITE_BASE_URL;
 function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -79,7 +79,7 @@ function Login() {
       <button
         className="google"
         onClick={() => {
-          window.location.href = "http://localhost:5000/api/auth/google";
+          window.location.href = `${BaseUrl}/api/auth/google`;
         }}
       >
         <img

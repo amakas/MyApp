@@ -8,7 +8,7 @@ import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 import { initSocket } from "../socket";
-const BaseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5000";
+const BaseUrl = import.meta.env.VITE_BASE_URL;
 function Profile() {
   const [userData, setUserData] = useState({});
   const id = localStorage.getItem("userId");
