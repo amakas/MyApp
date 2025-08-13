@@ -17,7 +17,7 @@ li {
   width: 100%;
   background-color: var(--navbar-bg-color);
   font-size: 1.5rem;
-  padding: 5px 20px;
+  padding: 5px 10px;
   z-index: 1005;
 }
 
@@ -60,7 +60,7 @@ li {
   display: flex;
   flex-direction: column;
   padding: 8px 15px;
-
+  overflow-y: auto;
   transform: translateX(-100%);
   transition: transform 0.35s ease;
   .logout-button {
@@ -106,8 +106,7 @@ li {
   text-align: start;
   font-size: 1.6rem;
   .burger {
-    margin: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
   }
   li {
     border-bottom: 1px solid #ffffff;
@@ -142,7 +141,7 @@ li {
   justify-content: space-between;
 
   list-style: none;
-  width: 50px;
+  width: 30px;
   .toggle-theme {
     cursor: pointer;
     background: none;
@@ -310,13 +309,6 @@ li {
   }
 }
 
-@media (max-width: 1024px) {
-  .myself {
-    font-size: 18px;
-    margin-left: 20px;
-  }
-}
-
 @media (max-width: 768px) {
   .app-name {
     font-size: 1.3rem;
@@ -337,12 +329,15 @@ li {
 }
 @media (max-width: 480px) {
   .app-name {
-    display: none;
+    font-size: 14px;
   }
   .search-bar .search-input {
     height: 35px;
   }
-
+  .logo img {
+    height: 30px;
+    width: 30px;
+  }
   .menu {
     width: 100px;
 

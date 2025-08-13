@@ -292,8 +292,6 @@ export default function UserChat() {
           </div>
         </div>
         <div className="messages-box">
-          <h2>Chat</h2>
-
           <div className="display">
             <Messages
               messages={messages}
@@ -307,7 +305,6 @@ export default function UserChat() {
           </div>
           <div className="message">
             <textarea
-              rows={3}
               className="input-message"
               name="text"
               onKeyDown={(e) => {
@@ -321,7 +318,7 @@ export default function UserChat() {
               placeholder="Your message..."
             />
             <button
-              className={text === "" ? "disabled" : "send-message"}
+              className={text === "" ? "send-message disabled" : "send-message"}
               disabled={text === ""}
               onClick={handleClick}
             >
