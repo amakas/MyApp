@@ -3,7 +3,8 @@ import { io } from "socket.io-client";
 let socket;
 
 export const initSocket = (token) => {
-  socket = io("https://toka-o14g.onrender.com", {
+  const path = "https://toka-o14g.onrender.com";
+  socket = io("http://localhost:5173/", {
     auth: {
       token: token,
     },

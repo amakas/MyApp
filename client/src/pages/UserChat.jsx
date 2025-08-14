@@ -121,11 +121,42 @@ export default function UserChat() {
         const data = await response.json();
         const msgs = data.map((msg) => {
           const { content, username, createdAt, updatedAt } = msg;
-          const sendTime = new Date(createdAt).toLocaleTimeString("uk-UA", {
+          const dateObj = new Date(createdAt);
+
+          const sendTime = dateObj.toLocaleTimeString("uk-UA", {
+            hour: "2-digit",
+            minute: "2-digit",
             hour12: false,
           });
+
+          const today = new Date();
+          const yesterday = new Date();
+          yesterday.setDate(today.getDate() - 1);
+
+          const isToday = dateObj.toDateString() === today.toDateString();
+          const isYesterday =
+            dateObj.toDateString() === yesterday.toDateString();
+
+          let dateLabel;
+          if (isToday) {
+            dateLabel = "Today";
+          } else if (isYesterday) {
+            dateLabel = "Yesterday";
+          } else {
+            const day = String(dateObj.getDate()).padStart(2, "0");
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+            dateLabel = `${day}.${month}`;
+          }
+
+          const formattedDate = `${sendTime}, ${dateLabel}`;
           const isMine = username === myusername;
-          return { content, username, sendTime, updatedAt, isMine };
+          return {
+            content,
+            username,
+            sendTime: formattedDate,
+            updatedAt,
+            isMine,
+          };
         });
         setMessages(msgs);
         if (msgs.length <= 50) {
@@ -227,11 +258,42 @@ export default function UserChat() {
 
         const msgs = allMsgs.map((msg) => {
           const { content, username, createdAt, updatedAt } = msg;
-          const sendTime = new Date(createdAt).toLocaleTimeString("uk-UA", {
+          const dateObj = new Date(createdAt);
+
+          const sendTime = dateObj.toLocaleTimeString("uk-UA", {
+            hour: "2-digit",
+            minute: "2-digit",
             hour12: false,
           });
+
+          const today = new Date();
+          const yesterday = new Date();
+          yesterday.setDate(today.getDate() - 1);
+
+          const isToday = dateObj.toDateString() === today.toDateString();
+          const isYesterday =
+            dateObj.toDateString() === yesterday.toDateString();
+
+          let dateLabel;
+          if (isToday) {
+            dateLabel = "Today";
+          } else if (isYesterday) {
+            dateLabel = "Yesterday";
+          } else {
+            const day = String(dateObj.getDate()).padStart(2, "0");
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+            dateLabel = `${day}.${month}`;
+          }
+
+          const formattedDate = `${sendTime}, ${dateLabel}`;
           const isMine = username === myusername;
-          return { content, username, sendTime, updatedAt, isMine };
+          return {
+            content,
+            username,
+            sendTime: formattedDate,
+            updatedAt,
+            isMine,
+          };
         });
 
         setMessages((prev) => [...msgs, ...prev]);
