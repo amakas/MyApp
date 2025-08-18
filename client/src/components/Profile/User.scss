@@ -14,6 +14,9 @@
 .profile-title {
   font-size: 1.6rem;
   margin: 10px;
+  overflow: auto;
+  width: 80%;
+  margin: auto;
 }
 .profile-header {
   display: flex;
@@ -24,11 +27,14 @@
   margin-bottom: 30px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 20px;
+  overflow: auto;
 }
 
 .name-bio {
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  width: 60%;
 }
 
 .picture {
@@ -46,6 +52,7 @@
   font-weight: bold;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  overflow: auto;
 }
 
 .user-details {
@@ -62,6 +69,7 @@
   border-radius: 8px;
   color: white;
   font-size: 18px;
+  overflow: auto;
 }
 .user-details p:last-child {
   grid-column: 1 / -1;

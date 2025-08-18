@@ -42,8 +42,12 @@ export default function Dialogs() {
       <h1>Dialogs</h1>
       <div className="people-dialogs">
         <h2>My dialogs:</h2>
+        {(people.length === 0 || !people) && (
+          <div>
+            <em>No dialogs yet</em>
+          </div>
+        )}
         {people.map((person) => {
-          if (people.length === 0 || !people) return <div>No dialogs yet</div>;
           const profilePicture = person.profilePicture
             ? person.profilePicture.startsWith("http")
               ? person.profilePicture
