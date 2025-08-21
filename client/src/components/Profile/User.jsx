@@ -18,6 +18,10 @@ export default function User({
   followingArr = [],
   posts = [],
   pictureClass,
+  handleFollow,
+  isFollowing = false,
+  handleMessage,
+  isMe = true,
 }) {
   const navigate = useNavigate();
 
@@ -33,6 +37,7 @@ export default function User({
   const handleFollowing = () => {
     navigate(`/following/${id}`);
   };
+
   return (
     <section className="user-profile">
       <h1 className="profile-title">{username}</h1>
@@ -55,6 +60,31 @@ export default function User({
           <p className="bio">Bio: {bio}</p>
         </div>
       </div>
+      {!isMe ? (
+        <div className="profile-actions">
+          <button
+            className={
+              isFollowing
+                ? "follow-button followed"
+                : "follow-button notfollowed"
+            }
+            onClick={(e) => handleFollow(e, id)}
+          >
+            {isFollowing ? "Unfollow" : "Follow"}
+          </button>
+
+          <button
+            className="message-button"
+            onClick={(e) => {
+              handleMessage(e, id);
+              e.stopPropagation();
+            }}
+          >
+            Message
+          </button>
+        </div>
+      ) : null}
+
       <div className="user-details">
         <p className="username">Username: {username}</p>
 

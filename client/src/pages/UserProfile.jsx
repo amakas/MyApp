@@ -9,12 +9,13 @@ import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 const BaseUrl = "https://toka-o14g.onrender.com";
 function UserProfile() {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({ followers: [], following: [] });
   const [posts, setPosts] = useState([]);
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { id } = useParams();
+
   const profilePictureUrl = userData.profilePicture
     ? userData.profilePicture.startsWith("http")
       ? userData.profilePicture
@@ -69,6 +70,40 @@ function UserProfile() {
     if (userId) fetchPosts();
   }, [userId]);
 
+  const handleFollow = async (e, personId) => {
+    e.stopPropagation();
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (personId === userId) return;
+    try {
+      const response = await fetch(`/api/users/follow/${personId}`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ userId }),
+      });
+      if (response.ok) {
+        const isCurrentlyFollowing = userData.followers.includes(userId);
+        setUserData((prev) => ({
+          ...prev,
+          followers: isCurrentlyFollowing
+            ? prev.followers.filter((id) => id !== userId)
+            : [...prev.followers, userId],
+        }));
+      } else {
+        console.error("Fail to follow");
+      }
+    } catch (error) {
+      console.error("Internal error", error);
+    }
+  };
+  const handleMessage = (e, personId) => {
+    if (personId === id) {
+      return;
+    }
+    navigate(`/userChat/${id}`);
+  };
+  const isFollowing = userData.followers.includes(userId);
   return (
     <div className="profile-page">
       <User
@@ -85,6 +120,10 @@ function UserProfile() {
         followingArr={userData.following}
         posts={posts}
         pictureClass={pictureClass}
+        isFollowing={isFollowing}
+        handleFollow={handleFollow}
+        isMe={false}
+        handleMessage={handleMessage}
       />
 
       <PostList posts={posts} setPosts={setPosts} />

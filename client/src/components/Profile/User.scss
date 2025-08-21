@@ -142,3 +142,12 @@ a {
     font-size: 12px;
   }
 }
+
+.profile-actions {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+  margin-bottom: 10px;
+}
