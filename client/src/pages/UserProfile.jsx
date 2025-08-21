@@ -101,7 +101,7 @@ function UserProfile() {
     if (personId === id) {
       return;
     }
-    navigate(`/userChat/${id}`);
+    navigate(`/userChat/${personId}`);
   };
   const isFollowing = userData.followers.includes(userId);
   return (
