@@ -98,9 +98,6 @@ function UserProfile() {
     }
   };
   const handleMessage = (e, personId) => {
-    if (personId === id) {
-      return;
-    }
     navigate(`/userChat/${personId}`);
   };
   const isFollowing = userData.followers.includes(userId);
