@@ -303,7 +303,7 @@ function Chat() {
                     }}
                     alt="avatar"
                   />
-                  <p>{person.username}</p>
+                  <p className="person-username">{person.username}</p>
                 </div>
               );
             })}

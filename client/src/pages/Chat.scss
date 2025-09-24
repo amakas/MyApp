@@ -60,7 +60,12 @@
     font-size: 18px;
     font-weight: 600;
     color: var(--text-color);
+    overflow: hidden;
   }
+}
+
+h3 {
+  overflow: hidden;
 }
 
 .people-chats {
