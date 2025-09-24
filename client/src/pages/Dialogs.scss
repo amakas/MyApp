@@ -38,7 +38,10 @@
   width: 40%;
   color: inherit;
 }
-
+.pers-details p {
+  margin: 0 5px;
+  overflow: hidden;
+}
 .chat-people-item .other {
   width: 60%;
   display: flex;
