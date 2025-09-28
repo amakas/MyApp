@@ -90,6 +90,7 @@ export default function EditProfile() {
       if (response.ok) {
         alert("Profile updated successfully!");
         localStorage.setItem("username", data.username);
+        setExistingProfilePicture(data.profilePicture);
       } else {
         alert(data.message || "Failed to update profile");
       }

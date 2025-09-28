@@ -4,6 +4,8 @@ import Post from "../models/Post.js";
 import Message from "../models/Message.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import upload from "../middlewares/upload.js";
+import cloudinary from "../cloudinary.js";
 dotenv.config();
 export const getUser = async (req, res) => {
   const { id } = req.params;
@@ -45,7 +47,17 @@ export const updateUser = async (req, res) => {
     };
 
     if (req.file) {
-      updateFields.profilePicture = req.file.path;
+      // Завантаження у Cloudinary напряму з buffer
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream({ folder: "profile_pictures" }, (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          })
+          .end(req.file.buffer);
+      });
+
+      updateFields.profilePicture = result.secure_url;
     }
 
     const user = await User.findByIdAndUpdate(id, updateFields, {
