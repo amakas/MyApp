@@ -8,7 +8,7 @@ import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 import { initSocket } from "../socket";
-const BaseUrl = "https://toka-o14g.onrender.com";
+
 function Profile() {
   const [userData, setUserData] = useState({});
   const id = localStorage.getItem("userId");
@@ -17,9 +17,7 @@ function Profile() {
   const navigate = useNavigate();
 
   const profilePictureUrl = userData.profilePicture
-    ? userData.profilePicture.startsWith("http")
-      ? userData.profilePicture
-      : `${BaseUrl}${userData.profilePicture}`
+    ? userData.profilePicture
     : `https://ui-avatars.com/api/?name=${userData.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
 

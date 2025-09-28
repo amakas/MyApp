@@ -1,7 +1,7 @@
 import "./peopleList.scss";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const BaseUrl = "https://toka-o14g.onrender.com";
+
 import { getSocket } from "../socket";
 export const ListOfPeople = ({
   people,
@@ -78,9 +78,7 @@ export const ListOfPeople = ({
         const isFollowing = person.followers.includes(userId);
 
         const profilePictureUrl = person.profilePicture
-          ? person.profilePicture.startsWith("http")
-            ? person.profilePicture
-            : `${BaseUrl}${person.profilePicture}`
+          ? person.profilePicture
           : `https://ui-avatars.com/api/?name=${person.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
         const pictureClass = person.profilePicture
           ? "picture"

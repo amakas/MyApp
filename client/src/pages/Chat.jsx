@@ -286,9 +286,7 @@ function Chat() {
             <h2>Dialogs:</h2>
             {people.map((person) => {
               const profilePicture = person.profilePicture
-                ? person.profilePicture.startsWith("http")
-                  ? person.profilePicture
-                  : `${BaseUrl}${person.profilePicture}`
+                ? person.profilePicture
                 : `https://ui-avatars.com/api/?name=${person.username}`;
               return (
                 <div

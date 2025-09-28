@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import User from "../components/Profile/User";
-import PostForm from "../components/Profile/PostForm";
+
 import PostList from "../components/Profile/PostList";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
-const BaseUrl = "https://toka-o14g.onrender.com";
+
 function UserProfile() {
   const [userData, setUserData] = useState({ followers: [], following: [] });
   const [posts, setPosts] = useState([]);
@@ -17,9 +17,7 @@ function UserProfile() {
   const { id } = useParams();
 
   const profilePictureUrl = userData.profilePicture
-    ? userData.profilePicture.startsWith("http")
-      ? userData.profilePicture
-      : `${BaseUrl}${userData.profilePicture}`
+    ? userData.profilePicture
     : `https://ui-avatars.com/api/?name=${userData.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = userData.profilePicture ? "picture" : "defaultPicture";
   useEffect(() => {

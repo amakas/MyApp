@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dialogs.scss";
-const BaseUrl = "https://toka-o14g.onrender.com";
+
 export default function Dialogs() {
   const [people, setPeople] = useState([]);
 
@@ -49,9 +49,7 @@ export default function Dialogs() {
         )}
         {people.map((person) => {
           const profilePicture = person.profilePicture
-            ? person.profilePicture.startsWith("http")
-              ? person.profilePicture
-              : `${BaseUrl}${person.profilePicture}`
+            ? person.profilePicture
             : `https://ui-avatars.com/api/?name=${person.username}`;
           return (
             <div

@@ -108,9 +108,7 @@ export default function EditProfile() {
           <img
             src={
               existingProfilePicture
-                ? existingProfilePicture.startsWith("http")
-                  ? existingProfilePicture
-                  : `${BaseUrl}${existingProfilePicture}`
+                ? existingProfilePicture
                 : `https://ui-avatars.com/api/?name=${formData.username}`
             }
             className="picture"

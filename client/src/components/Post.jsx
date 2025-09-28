@@ -191,9 +191,7 @@ export default function Post({
     getProfilePicture();
   }, [postId]);
   const profilePictureUrl = profilePicture
-    ? profilePicture.startsWith("http")
-      ? profilePicture
-      : `${BaseUrl}${profilePicture}`
+    ? profilePicture
     : `https://ui-avatars.com/api/?name=${post.username}&background=1abc9c&color=ffffff&rounded=true&bold=true`;
   const pictureClass = profilePicture ? "picture" : "defaultPicture";
 
