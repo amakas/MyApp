@@ -4,8 +4,8 @@ import Post from "../models/Post.js";
 import Message from "../models/Message.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import upload from "../middlewares/upload.js";
-import cloudinary from "../cloudinary.js";
+
+import cloudinary from "../middleware/cloudinary.js";
 dotenv.config();
 export const getUser = async (req, res) => {
   const { id } = req.params;
