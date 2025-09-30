@@ -34,12 +34,11 @@ The app includes authentication, posts, comments, likes, chat, and responsive de
 
 ---
 ## Screenshots
-<img width="1920" height="2111" alt="toka-o14g onrender com_home (1)" src="https://github.com/user-attachments/assets/01c87c25-caa3-449a-94dd-63ab1a5c6fd3" />
-<img width="1920" height="1819" alt="toka-o14g onrender com_home (5)" src="https://github.com/user-attachments/assets/afbc66ca-745e-4609-bb3e-700bf450c628" />
-<img width="1920" height="869" alt="toka-o14g onrender com_home (2)" src="https://github.com/user-attachments/assets/d805002b-5c7b-4608-b104-56ceaab190e1" />
-<img width="1920" height="869" alt="toka-o14g onrender com_home (4)" src="https://github.com/user-attachments/assets/08fb2eba-366f-4671-b1c3-9b4040c8b89d" />
 
-<img width="1920" height="869" alt="toka-o14g onrender com_home (3)" src="https://github.com/user-attachments/assets/4c6c0d9f-029c-4bf0-b5c1-34f7dd14c447" />
+<img width="1682" height="3704" alt="toka-o14g onrender com_profile (2)" src="https://github.com/user-attachments/assets/620ada0f-9d70-4bc6-8b3a-9fc3eb120065" />
+<img width="1960" height="1914" alt="toka-o14g onrender com_home (6)" src="https://github.com/user-attachments/assets/eace1376-62d0-4b03-b3f7-9c0f150b259c" />
+<img width="2062" height="1340" alt="toka-o14g onrender com_chat (5)" src="https://github.com/user-attachments/assets/7d3d6955-e5ae-4f52-a729-655f153d6f99" />
+<img width="2108" height="2648" alt="toka-o14g onrender com_chat (2)" src="https://github.com/user-attachments/assets/52583388-4a34-4eaf-88a3-a33a5c004e1e" />
 
 
 ## Notes  
